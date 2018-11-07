@@ -29,6 +29,7 @@ public class Main extends Game {
 
         // La fuente
         skin.add("font", new BitmapFont(Gdx.files.internal("KenneyFuture.fnt")));
+        skin.add("smallFont", new BitmapFont(Gdx.files.internal("KenneyFutureSmall.fnt")));
 
         // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -70,6 +71,10 @@ public class Main extends Game {
         
         Label.LabelStyle labelStyleDA = new Label.LabelStyle(skin.getFont("font"), Color.DARK_GRAY);
         skin.add("dark", labelStyleDA);
+        setScreen(new MainMenu(this, skin));
+        
+        Label.LabelStyle labelStyleSA = new Label.LabelStyle(skin.getFont("smallFont"), Color.DARK_GRAY);
+        skin.add("small", labelStyleSA);
         setScreen(new MainMenu(this, skin));
     }
 

@@ -8,6 +8,7 @@ package com.grupo2.proyecto.cpu;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.grupo2.proyecto.Main;
+import com.grupo2.proyecto.cpu.Algoritmos.RoundRobin;
 
 /**
  *
@@ -17,9 +18,8 @@ public class CPUScreen extends ScreenAdapter{
     
     private CPUView view;
 
-    public CPUScreen(Main main, Skin skin) {
-        
-        view = new CPUView(main, skin);
+    public CPUScreen(Main main, Skin skin, RoundRobin rr) {
+        view = new CPUView(main, skin, rr);
         
     }
 
@@ -30,7 +30,7 @@ public class CPUScreen extends ScreenAdapter{
 
     @Override
     public void resize(int width, int height) {
-        
+        view.resize(width, height);
     }
     
     

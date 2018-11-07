@@ -24,6 +24,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
+import com.grupo2.proyecto.cpu.Algoritmos.Proceso;
+import com.grupo2.proyecto.cpu.Algoritmos.RoundRobin;
 import com.grupo2.proyecto.cpu.CPUScreen;
 
 /**
@@ -84,25 +86,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc1Raf1 = new HorizontalGroup();
         hgProc1Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc1Raf1 = new TextField("", skin);
+        final TextField tfProc1Raf1 = new TextField("0", skin);
         hgProc1Raf1.addActor(tfProc1Raf1);
         hgProc1Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc1Raf2 = new HorizontalGroup();
         hgProc1Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc1Raf2 = new TextField("", skin);
+        final TextField tfProc1Raf2 = new TextField("0", skin);
         hgProc1Raf2.addActor(tfProc1Raf2);
         hgProc1Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc1Raf3 = new HorizontalGroup();
         hgProc1Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc1Raf3 = new TextField("", skin);
+        final TextField tfProc1Raf3 = new TextField("0", skin);
         hgProc1Raf3.addActor(tfProc1Raf3);
         hgProc1Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc1Raf4 = new HorizontalGroup();
         hgProc1Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc1Raf4 = new TextField("", skin);
+        final TextField tfProc1Raf4 = new TextField("0", skin);
         hgProc1Raf4.addActor(tfProc1Raf4);
         hgProc1Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc1RafagaNum.addListener(new ChangeListener() {
@@ -140,25 +142,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc2Raf1 = new HorizontalGroup();
         hgProc2Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc2Raf1 = new TextField("", skin);
+        final TextField tfProc2Raf1 = new TextField("0", skin);
         hgProc2Raf1.addActor(tfProc2Raf1);
         hgProc2Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc2Raf2 = new HorizontalGroup();
         hgProc2Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc2Raf2 = new TextField("", skin);
+        final TextField tfProc2Raf2 = new TextField("0", skin);
         hgProc2Raf2.addActor(tfProc2Raf2);
         hgProc2Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc2Raf3 = new HorizontalGroup();
         hgProc2Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc2Raf3 = new TextField("", skin);
+        final TextField tfProc2Raf3 = new TextField("0", skin);
         hgProc2Raf3.addActor(tfProc2Raf3);
         hgProc2Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc2Raf4 = new HorizontalGroup();
         hgProc2Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc2Raf4 = new TextField("", skin);
+        final TextField tfProc2Raf4 = new TextField("0", skin);
         hgProc2Raf4.addActor(tfProc2Raf4);
         hgProc2Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc2RafagaNum.addListener(new ChangeListener() {
@@ -195,25 +197,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc3Raf1 = new HorizontalGroup();
         hgProc3Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc3Raf1 = new TextField("", skin);
+        final TextField tfProc3Raf1 = new TextField("0", skin);
         hgProc3Raf1.addActor(tfProc3Raf1);
         hgProc3Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc3Raf2 = new HorizontalGroup();
         hgProc3Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc3Raf2 = new TextField("", skin);
+        final TextField tfProc3Raf2 = new TextField("0", skin);
         hgProc3Raf2.addActor(tfProc3Raf2);
         hgProc3Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc3Raf3 = new HorizontalGroup();
         hgProc3Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc3Raf3 = new TextField("", skin);
+        final TextField tfProc3Raf3 = new TextField("0", skin);
         hgProc3Raf3.addActor(tfProc3Raf3);
         hgProc3Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc3Raf4 = new HorizontalGroup();
         hgProc3Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc3Raf4 = new TextField("", skin);
+        final TextField tfProc3Raf4 = new TextField("0", skin);
         hgProc3Raf4.addActor(tfProc3Raf4);
         hgProc3Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc3RafagaNum.addListener(new ChangeListener() {
@@ -250,25 +252,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc4Raf1 = new HorizontalGroup();
         hgProc4Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc4Raf1 = new TextField("", skin);
+        final TextField tfProc4Raf1 = new TextField("0", skin);
         hgProc4Raf1.addActor(tfProc4Raf1);
         hgProc4Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc4Raf2 = new HorizontalGroup();
         hgProc4Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc4Raf2 = new TextField("", skin);
+        final TextField tfProc4Raf2 = new TextField("0", skin);
         hgProc4Raf2.addActor(tfProc4Raf2);
         hgProc4Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc4Raf3 = new HorizontalGroup();
         hgProc4Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc4Raf3 = new TextField("", skin);
+        final TextField tfProc4Raf3 = new TextField("0", skin);
         hgProc4Raf3.addActor(tfProc4Raf3);
         hgProc4Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc4Raf4 = new HorizontalGroup();
         hgProc4Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc4Raf4 = new TextField("", skin);
+        final TextField tfProc4Raf4 = new TextField("0", skin);
         hgProc4Raf4.addActor(tfProc4Raf4);
         hgProc4Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc4RafagaNum.addListener(new ChangeListener() {
@@ -305,25 +307,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc5Raf1 = new HorizontalGroup();
         hgProc5Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc5Raf1 = new TextField("", skin);
+        final TextField tfProc5Raf1 = new TextField("0", skin);
         hgProc5Raf1.addActor(tfProc5Raf1);
         hgProc5Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc5Raf2 = new HorizontalGroup();
         hgProc5Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc5Raf2 = new TextField("", skin);
+        final TextField tfProc5Raf2 = new TextField("0", skin);
         hgProc5Raf2.addActor(tfProc5Raf2);
         hgProc5Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc5Raf3 = new HorizontalGroup();
         hgProc5Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc5Raf3 = new TextField("", skin);
+        final TextField tfProc5Raf3 = new TextField("0", skin);
         hgProc5Raf3.addActor(tfProc5Raf3);
         hgProc5Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc5Raf4 = new HorizontalGroup();
         hgProc5Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc5Raf4 = new TextField("", skin);
+        final TextField tfProc5Raf4 = new TextField("0", skin);
         hgProc5Raf4.addActor(tfProc5Raf4);
         hgProc5Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc5RafagaNum.addListener(new ChangeListener() {
@@ -360,25 +362,25 @@ public class CPUMenu extends ScreenAdapter {
 
         final HorizontalGroup hgProc6Raf1 = new HorizontalGroup();
         hgProc6Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
-        TextField tfProc6Raf1 = new TextField("", skin);
+        final TextField tfProc6Raf1 = new TextField("0", skin);
         hgProc6Raf1.addActor(tfProc6Raf1);
         hgProc6Raf1.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc6Raf2 = new HorizontalGroup();
         hgProc6Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
-        TextField tfProc6Raf2 = new TextField("", skin);
+        final TextField tfProc6Raf2 = new TextField("0", skin);
         hgProc6Raf2.addActor(tfProc6Raf2);
         hgProc6Raf2.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc6Raf3 = new HorizontalGroup();
         hgProc3Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
-        TextField tfProc6Raf3 = new TextField("", skin);
+        final TextField tfProc6Raf3 = new TextField("0", skin);
         hgProc6Raf3.addActor(tfProc6Raf3);
         hgProc6Raf3.addActor(new Label("ms", skin, "dark"));
 
         final HorizontalGroup hgProc6Raf4 = new HorizontalGroup();
         hgProc6Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
-        TextField tfProc6Raf4 = new TextField("", skin);
+        final TextField tfProc6Raf4 = new TextField("0", skin);
         hgProc6Raf4.addActor(tfProc6Raf4);
         hgProc6Raf4.addActor(new Label("ms", skin, "dark"));
         sbProc6RafagaNum.addListener(new ChangeListener() {
@@ -406,30 +408,37 @@ public class CPUMenu extends ScreenAdapter {
         final ScrollPane spProcess = new ScrollPane(vgProcesos, skin);
 
         Container container = new Container(spProcess);
-        container.height(300).padBottom(20);
+        container.height(300).padBottom(10);
         vg.addActor(container);
 
         sbProcessNumSel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 vgProcesos.clearChildren();
-                switch (sbProcessNumSel.getSelectedIndex() + 1) {
-                    case 6:
-                        vgProcesos.addActorAt(0, vgProc6);
+                switch (sbProcessNumSel.getSelectedIndex()) {
                     case 5:
-                        vgProcesos.addActorAt(0, vgProc5);
+                        vgProcesos.addActorAt(0, vgProc6);
                     case 4:
-                        vgProcesos.addActorAt(0, vgProc4);
+                        vgProcesos.addActorAt(0, vgProc5);
                     case 3:
-                        vgProcesos.addActorAt(0, vgProc3);
+                        vgProcesos.addActorAt(0, vgProc4);
                     case 2:
-                        vgProcesos.addActorAt(0, vgProc2);
+                        vgProcesos.addActorAt(0, vgProc3);
                     case 1:
+                        vgProcesos.addActorAt(0, vgProc2);
+                    case 0:
                         vgProcesos.addActorAt(0, vgProc1);
                 }
             }
 
         });
+
+        HorizontalGroup hgConmutacion = new HorizontalGroup();
+        hgConmutacion.addActor(new Label("Tiempo de Conmutacion: ", skin));
+        TextField tfConmutacion = new TextField("1", skin);
+        hgConmutacion.addActor(tfConmutacion);
+        hgConmutacion.addActor(new Label("ms", skin));
+        vg.addActor(hgConmutacion);
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
         vgTipoAlgo.space(20);
@@ -475,8 +484,55 @@ public class CPUMenu extends ScreenAdapter {
         buttonAccept.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //sbProcessNumSel.getSelectedIndex() + 1;
-                main.setScreen(new CPUScreen(main, skin));
+                if (selectBox.getSelected().equals("Round Robin")) {
+                    RoundRobin rr = new RoundRobin(Integer.parseInt(textQuanto.getText()),
+                            sbProcessNumSel.getSelectedIndex() + 1);
+                    switch (sbProcessNumSel.getSelectedIndex()) {
+                        case 5:
+                            int[] proc6Rafs = new int[4];
+                            proc6Rafs[0] = Integer.parseInt(tfProc6Raf1.getText());
+                            proc6Rafs[0] = Integer.parseInt(tfProc6Raf2.getText());
+                            proc6Rafs[0] = Integer.parseInt(tfProc6Raf3.getText());
+                            proc6Rafs[0] = Integer.parseInt(tfProc6Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc6Rafs, sbProc6RafagaNum.getSelectedIndex() + 1, 0));
+                        case 4:
+                            int[] proc5Rafs = new int[4];
+                            proc5Rafs[0] = Integer.parseInt(tfProc5Raf1.getText());
+                            proc5Rafs[0] = Integer.parseInt(tfProc5Raf2.getText());
+                            proc5Rafs[0] = Integer.parseInt(tfProc5Raf3.getText());
+                            proc5Rafs[0] = Integer.parseInt(tfProc5Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc5Rafs, sbProc5RafagaNum.getSelectedIndex() + 1, 0));
+                        case 3:
+                            int[] proc4Rafs = new int[4];
+                            proc4Rafs[0] = Integer.parseInt(tfProc4Raf1.getText());
+                            proc4Rafs[0] = Integer.parseInt(tfProc4Raf2.getText());
+                            proc4Rafs[0] = Integer.parseInt(tfProc4Raf3.getText());
+                            proc4Rafs[0] = Integer.parseInt(tfProc4Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc4Rafs, sbProc4RafagaNum.getSelectedIndex() + 1, 0));
+                        case 2:
+                            int[] proc3Rafs = new int[4];
+                            proc3Rafs[0] = Integer.parseInt(tfProc3Raf1.getText());
+                            proc3Rafs[0] = Integer.parseInt(tfProc3Raf2.getText());
+                            proc3Rafs[0] = Integer.parseInt(tfProc3Raf3.getText());
+                            proc3Rafs[0] = Integer.parseInt(tfProc3Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc3Rafs, sbProc3RafagaNum.getSelectedIndex() + 1, 0));
+                        case 1:
+                            int[] proc2Rafs = new int[4];
+                            proc2Rafs[0] = Integer.parseInt(tfProc2Raf1.getText());
+                            proc2Rafs[0] = Integer.parseInt(tfProc2Raf2.getText());
+                            proc2Rafs[0] = Integer.parseInt(tfProc2Raf3.getText());
+                            proc2Rafs[0] = Integer.parseInt(tfProc2Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc2Rafs, sbProc2RafagaNum.getSelectedIndex() + 1, 0));
+                        case 0:
+                            int[] proc1Rafs = new int[4];
+                            proc1Rafs[0] = Integer.parseInt(tfProc1Raf1.getText());
+                            proc1Rafs[0] = Integer.parseInt(tfProc1Raf2.getText());
+                            proc1Rafs[0] = Integer.parseInt(tfProc1Raf3.getText());
+                            proc1Rafs[0] = Integer.parseInt(tfProc1Raf4.getText());
+                            rr.cola.add(new Proceso(0, proc1Rafs, sbProc1RafagaNum.getSelectedIndex() + 1, 0));
+                    }
+                    main.setScreen(new CPUScreen(main, skin, rr));
+                }
                 dispose();
             }
         });
