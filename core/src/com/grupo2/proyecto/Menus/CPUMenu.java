@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -34,6 +35,7 @@ public class CPUMenu extends ScreenAdapter {
     Skin skin;
     Stage stage;
     final Main main;
+    ChangeListener clRafagaNum;
 
     public CPUMenu(final Main main, final Skin skin) {
         this.main = main;
@@ -51,267 +53,356 @@ public class CPUMenu extends ScreenAdapter {
         Label lProcessNumSel = new Label("Numero de procesos:", skin);
         hgProceesNumSel.addActor(lProcessNumSel);
         final SelectBox sbProcessNumSel = new SelectBox(skin);
-        sbProcessNumSel.setItems(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-        sbProcessNumSel.setMaxListCount(5);
+        sbProcessNumSel.setItems(1, 2, 3, 4, 5, 6);
+        sbProcessNumSel.setMaxListCount(4);
 
         hgProceesNumSel.addActor(sbProcessNumSel);
         vg.addActor(hgProceesNumSel);
 
-        final VerticalGroup vgProcess = new VerticalGroup();
-        vgProcess.pad(20);
+        final VerticalGroup vgProcesos = new VerticalGroup();
+        vgProcesos.pad(20);
+        
+        Container cSeparador1 = new Container(new Image(skin.getDrawable("slider_back_hor")));
+        cSeparador1.width(400).pad(10);
+        Container cSeparador2 = new Container(new Image(skin.getDrawable("slider_back_hor")));
+        cSeparador2.width(400).pad(10);
+        Container cSeparador3 = new Container(new Image(skin.getDrawable("slider_back_hor")));
+        cSeparador3.width(400).pad(10);
+        Container cSeparador4 = new Container(new Image(skin.getDrawable("slider_back_hor")));
+        cSeparador4.width(400).pad(10);
+        Container cSeparador5 = new Container(new Image(skin.getDrawable("slider_back_hor")));
+        cSeparador5.width(400).pad(10);
+        
 
-        final Label lRafaga1 = new Label("Proceso 1: ", skin, "dark");
-        final TextField tfRafaga1 = new TextField("1", skin);
-        final Label lms1 = new Label("ms, ", skin, "dark");
-        final Label lListoEn1 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn1 = new TextField("0", skin);
-        final Label lmsL1 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess1 = new HorizontalGroup().space(5);
-        hgProcess1.addActor(lRafaga1);
-        hgProcess1.addActor(tfRafaga1);
-        hgProcess1.addActor(lms1);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-        vgProcess.addActor(hgProcess1);
+        final VerticalGroup vgProc1 = new VerticalGroup();
+        vgProc1.addActor(new Label("Proceso 1:", skin, "dark"));
+        
+        HorizontalGroup hgProc1RafagaNum = new HorizontalGroup();
+        hgProc1RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc1RafagaNum = new SelectBox(skin);
+        sbProc1RafagaNum.setItems(1, 2, 3, 4);
+        hgProc1RafagaNum.addActor(sbProc1RafagaNum);
+        
+        final HorizontalGroup hgProc1Raf1 = new HorizontalGroup();
+        hgProc1Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc1Raf1 = new TextField("", skin);
+        hgProc1Raf1.addActor(tfProc1Raf1);
+        hgProc1Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc1Raf2 = new HorizontalGroup();
+        hgProc1Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc1Raf2 = new TextField("", skin);
+        hgProc1Raf2.addActor(tfProc1Raf2);
+        hgProc1Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc1Raf3 = new HorizontalGroup();
+        hgProc1Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc1Raf3 = new TextField("", skin);
+        hgProc1Raf3.addActor(tfProc1Raf3);
+        hgProc1Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc1Raf4 = new HorizontalGroup();
+        hgProc1Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc1Raf4 = new TextField("", skin);
+        hgProc1Raf4.addActor(tfProc1Raf4);
+        hgProc1Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc1RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc1Raf1.remove();
+                hgProc1Raf2.remove();
+                hgProc1Raf3.remove();
+                hgProc1Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc1.addActorAt(2,hgProc1Raf4);
+                    case 2: vgProc1.addActorAt(2,hgProc1Raf3);
+                    case 1: vgProc1.addActorAt(2,hgProc1Raf2);
+                    case 0: vgProc1.addActorAt(2,hgProc1Raf1);
+                }
+            }
+        });
+        vgProc1.addActor(hgProc1RafagaNum);
+        vgProc1.addActor(hgProc1Raf1);
+        vgProcesos.addActor(vgProc1);
 
-        Label lRafaga2 = new Label("Proceso 2: ", skin, "dark");
-        TextField tfRafaga2 = new TextField("1", skin);
-        Label lms2 = new Label("ms", skin, "dark");
-        final Label lListoEn2 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn2 = new TextField("0", skin);
-        final Label lmsL2 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess2 = new HorizontalGroup().space(5);
-        hgProcess2.addActor(lRafaga2);
-        hgProcess2.addActor(tfRafaga2);
-        hgProcess2.addActor(lms2);
-        hgProcess1.addActor(lListoEn2);
-        hgProcess1.addActor(tfListoEn2);
-        hgProcess1.addActor(lmsL2);
+        final VerticalGroup vgProc2 = new VerticalGroup();
+        vgProc2.addActor(cSeparador1);
+        vgProc2.addActor(new Label("Proceso 2:", skin, "dark"));
+        
+        HorizontalGroup hgProc2RafagaNum = new HorizontalGroup();
+        hgProc2RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc2RafagaNum = new SelectBox(skin);
+        sbProc2RafagaNum.setItems(1, 2, 3, 4);
+        hgProc2RafagaNum.addActor(sbProc2RafagaNum);
+        
+        final HorizontalGroup hgProc2Raf1 = new HorizontalGroup();
+        hgProc2Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc2Raf1 = new TextField("", skin);
+        hgProc2Raf1.addActor(tfProc2Raf1);
+        hgProc2Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc2Raf2 = new HorizontalGroup();
+        hgProc2Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc2Raf2 = new TextField("", skin);
+        hgProc2Raf2.addActor(tfProc2Raf2);
+        hgProc2Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc2Raf3 = new HorizontalGroup();
+        hgProc2Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc2Raf3 = new TextField("", skin);
+        hgProc2Raf3.addActor(tfProc2Raf3);
+        hgProc2Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc2Raf4 = new HorizontalGroup();
+        hgProc2Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc2Raf4 = new TextField("", skin);
+        hgProc2Raf4.addActor(tfProc2Raf4);
+        hgProc2Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc2RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc2Raf1.remove();
+                hgProc2Raf2.remove();
+                hgProc2Raf3.remove();
+                hgProc2Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc2.addActorAt(3,hgProc2Raf4);
+                    case 2: vgProc2.addActorAt(3,hgProc2Raf3);
+                    case 1: vgProc2.addActorAt(3,hgProc2Raf2);
+                    case 0: vgProc2.addActorAt(3,hgProc2Raf1);
+                }
+            }
+        });
+        vgProc2.addActor(hgProc2RafagaNum);
+        vgProc2.addActor(hgProc2Raf1);
 
-        Label lRafaga3 = new Label("Proceso 3: ", skin, "dark");
-        TextField tfRafaga3 = new TextField("1", skin);
-        Label lms3 = new Label("ms", skin, "dark");
-        final Label lListoEn3 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn3 = new TextField("0", skin);
-        final Label lmsL3 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess3 = new HorizontalGroup();
-        hgProcess3.addActor(lRafaga3);
-        hgProcess3.addActor(tfRafaga3);
-        hgProcess3.addActor(lms3);
-        hgProcess1.addActor(lListoEn3);
-        hgProcess1.addActor(tfListoEn3);
-        hgProcess1.addActor(lmsL3);
+        final VerticalGroup vgProc3 = new VerticalGroup();
+        vgProc3.addActor(cSeparador2);
+        vgProc3.addActor(new Label("Proceso 3:", skin, "dark"));
+        
+        HorizontalGroup hgProc3RafagaNum = new HorizontalGroup();
+        hgProc3RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc3RafagaNum = new SelectBox(skin);
+        sbProc3RafagaNum.setItems(1, 2, 3, 4);
+        hgProc3RafagaNum.addActor(sbProc3RafagaNum);
+        
+        final HorizontalGroup hgProc3Raf1 = new HorizontalGroup();
+        hgProc3Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc3Raf1 = new TextField("", skin);
+        hgProc3Raf1.addActor(tfProc3Raf1);
+        hgProc3Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc3Raf2 = new HorizontalGroup();
+        hgProc3Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc3Raf2 = new TextField("", skin);
+        hgProc3Raf2.addActor(tfProc3Raf2);
+        hgProc3Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc3Raf3 = new HorizontalGroup();
+        hgProc3Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc3Raf3 = new TextField("", skin);
+        hgProc3Raf3.addActor(tfProc3Raf3);
+        hgProc3Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc3Raf4 = new HorizontalGroup();
+        hgProc3Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc3Raf4 = new TextField("", skin);
+        hgProc3Raf4.addActor(tfProc3Raf4);
+        hgProc3Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc3RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc3Raf1.remove();
+                hgProc3Raf2.remove();
+                hgProc3Raf3.remove();
+                hgProc3Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc3.addActorAt(3,hgProc3Raf4);
+                    case 2: vgProc3.addActorAt(3,hgProc3Raf3);
+                    case 1: vgProc3.addActorAt(3,hgProc3Raf2);
+                    case 0: vgProc3.addActorAt(3,hgProc3Raf1);
+                }
+            }
+        });
+        vgProc3.addActor(hgProc3RafagaNum);
+        vgProc3.addActor(hgProc3Raf1);
 
-        Label lRafaga4 = new Label("Proceso 4: ", skin, "dark");
-        TextField tfRafaga4 = new TextField("1", skin);
-        Label lms4 = new Label("ms", skin, "dark");
-        final Label lListoEn4 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn4 = new TextField("0", skin);
-        final Label lmsL4 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess4 = new HorizontalGroup();
-        hgProcess4.addActor(lRafaga4);
-        hgProcess4.addActor(tfRafaga4);
-        hgProcess4.addActor(lms4);
-        hgProcess1.addActor(lListoEn4);
-        hgProcess1.addActor(tfListoEn4);
-        hgProcess1.addActor(lmsL4);
+        final VerticalGroup vgProc4 = new VerticalGroup();
+        vgProc4.addActor(cSeparador3);
+        vgProc4.addActor(new Label("Proceso 4:", skin, "dark"));
+        
+        HorizontalGroup hgProc4RafagaNum = new HorizontalGroup();
+        hgProc4RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc4RafagaNum = new SelectBox(skin);
+        sbProc4RafagaNum.setItems(1, 2, 3, 4);
+        hgProc4RafagaNum.addActor(sbProc4RafagaNum);
+        
+        final HorizontalGroup hgProc4Raf1 = new HorizontalGroup();
+        hgProc4Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc4Raf1 = new TextField("", skin);
+        hgProc4Raf1.addActor(tfProc4Raf1);
+        hgProc4Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc4Raf2 = new HorizontalGroup();
+        hgProc4Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc4Raf2 = new TextField("", skin);
+        hgProc4Raf2.addActor(tfProc4Raf2);
+        hgProc4Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc4Raf3 = new HorizontalGroup();
+        hgProc4Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc4Raf3 = new TextField("", skin);
+        hgProc4Raf3.addActor(tfProc4Raf3);
+        hgProc4Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc4Raf4 = new HorizontalGroup();
+        hgProc4Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc4Raf4 = new TextField("", skin);
+        hgProc4Raf4.addActor(tfProc4Raf4);
+        hgProc4Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc4RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc4Raf1.remove();
+                hgProc4Raf2.remove();
+                hgProc4Raf3.remove();
+                hgProc4Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc4.addActorAt(3,hgProc4Raf4);
+                    case 2: vgProc4.addActorAt(3,hgProc4Raf3);
+                    case 1: vgProc4.addActorAt(3,hgProc4Raf2);
+                    case 0: vgProc4.addActorAt(3,hgProc4Raf1);
+                }
+            }
+        });
+        vgProc4.addActor(hgProc4RafagaNum);
+        vgProc4.addActor(hgProc4Raf1);
+        
+        final VerticalGroup vgProc5 = new VerticalGroup();
+        vgProc5.addActor(cSeparador4);
+        vgProc5.addActor(new Label("Proceso 5:", skin, "dark"));
+        
+        HorizontalGroup hgProc5RafagaNum = new HorizontalGroup();
+        hgProc5RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc5RafagaNum = new SelectBox(skin);
+        sbProc5RafagaNum.setItems(1, 2, 3, 4);
+        hgProc5RafagaNum.addActor(sbProc5RafagaNum);
+        
+        final HorizontalGroup hgProc5Raf1 = new HorizontalGroup();
+        hgProc5Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc5Raf1 = new TextField("", skin);
+        hgProc5Raf1.addActor(tfProc5Raf1);
+        hgProc5Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc5Raf2 = new HorizontalGroup();
+        hgProc5Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc5Raf2 = new TextField("", skin);
+        hgProc5Raf2.addActor(tfProc5Raf2);
+        hgProc5Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc5Raf3 = new HorizontalGroup();
+        hgProc5Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc5Raf3 = new TextField("", skin);
+        hgProc5Raf3.addActor(tfProc5Raf3);
+        hgProc5Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc5Raf4 = new HorizontalGroup();
+        hgProc5Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc5Raf4 = new TextField("", skin);
+        hgProc5Raf4.addActor(tfProc5Raf4);
+        hgProc5Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc5RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc5Raf1.remove();
+                hgProc5Raf2.remove();
+                hgProc5Raf3.remove();
+                hgProc5Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc5.addActorAt(3,hgProc5Raf4);
+                    case 2: vgProc5.addActorAt(3,hgProc5Raf3);
+                    case 1: vgProc5.addActorAt(3,hgProc5Raf2);
+                    case 0: vgProc5.addActorAt(3,hgProc5Raf1);
+                }
+            }
+        });
+        vgProc5.addActor(hgProc5RafagaNum);
+        vgProc5.addActor(hgProc5Raf1);
+        
+        final VerticalGroup vgProc6 = new VerticalGroup();
+        vgProc6.addActor(cSeparador5);
+        vgProc6.addActor(new Label("Proceso 6:", skin, "dark"));
+        
+        HorizontalGroup hgProc6RafagaNum = new HorizontalGroup();
+        hgProc6RafagaNum.addActor(new Label("Cantidad de rafagas: ", skin, "dark"));
+        final SelectBox sbProc6RafagaNum = new SelectBox(skin);
+        sbProc6RafagaNum.setItems(1, 2, 3, 4);
+        hgProc6RafagaNum.addActor(sbProc6RafagaNum);
+        
+        final HorizontalGroup hgProc6Raf1 = new HorizontalGroup();
+        hgProc6Raf1.addActor(new Label("Rafaga 1 : ", skin, "dark"));
+        TextField tfProc6Raf1 = new TextField("", skin);
+        hgProc6Raf1.addActor(tfProc6Raf1);
+        hgProc6Raf1.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc6Raf2 = new HorizontalGroup();
+        hgProc6Raf2.addActor(new Label("Rafaga 2: ", skin, "dark"));
+        TextField tfProc6Raf2 = new TextField("", skin);
+        hgProc6Raf2.addActor(tfProc6Raf2);
+        hgProc6Raf2.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc6Raf3 = new HorizontalGroup();
+        hgProc3Raf3.addActor(new Label("Rafaga 3: ", skin, "dark"));
+        TextField tfProc6Raf3 = new TextField("", skin);
+        hgProc6Raf3.addActor(tfProc6Raf3);
+        hgProc6Raf3.addActor(new Label("ms", skin, "dark"));
+        
+        final HorizontalGroup hgProc6Raf4 = new HorizontalGroup();
+        hgProc6Raf4.addActor(new Label("Rafaga 4: ", skin, "dark"));
+        TextField tfProc6Raf4 = new TextField("", skin);
+        hgProc6Raf4.addActor(tfProc6Raf4);
+        hgProc6Raf4.addActor(new Label("ms", skin, "dark"));
+        sbProc6RafagaNum.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                hgProc6Raf1.remove();
+                hgProc6Raf2.remove();
+                hgProc6Raf3.remove();
+                hgProc6Raf4.remove();
+                switch(sbProc1RafagaNum.getSelectedIndex()) {
+                    case 3: vgProc6.addActorAt(3,hgProc6Raf4);
+                    case 2: vgProc6.addActorAt(3,hgProc6Raf3);
+                    case 1: vgProc6.addActorAt(3,hgProc6Raf2);
+                    case 0: vgProc6.addActorAt(3,hgProc6Raf1);
+                }
+            }
+        });
+        vgProc6.addActor(hgProc6RafagaNum);
+        vgProc6.addActor(hgProc6Raf1);
 
-        Label lRafaga5 = new Label("Proceso 5: ", skin, "dark");
-        TextField tfRafaga5 = new TextField("1", skin);
-        Label lms5 = new Label("ms", skin, "dark");
-        final Label lListoEn5 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn5 = new TextField("0", skin);
-        final Label lmsL5 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess5 = new HorizontalGroup();
-        hgProcess5.addActor(lRafaga5);
-        hgProcess5.addActor(tfRafaga5);
-        hgProcess5.addActor(lms5);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga6 = new Label("Proceso 6: ", skin, "dark");
-        TextField tfRafaga6 = new TextField("1", skin);
-        Label lms6 = new Label("ms", skin, "dark");
-        final Label lListoEn6 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn6 = new TextField("0", skin);
-        final Label lmsL6 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess6 = new HorizontalGroup();
-        hgProcess6.addActor(lRafaga6);
-        hgProcess6.addActor(tfRafaga6);
-        hgProcess6.addActor(lms6);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga7 = new Label("Proceso 7: ", skin, "dark");
-        TextField tfRafaga7 = new TextField("1", skin);
-        Label lms7 = new Label("ms", skin, "dark");
-        final Label lListoEn7 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn7 = new TextField("0", skin);
-        final Label lmsL7 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess7 = new HorizontalGroup();
-        hgProcess7.addActor(lRafaga7);
-        hgProcess7.addActor(tfRafaga7);
-        hgProcess7.addActor(lms7);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga8 = new Label("Proceso 8: ", skin, "dark");
-        TextField tfRafaga8 = new TextField("1", skin);
-        Label lms8 = new Label("ms", skin, "dark");
-        final Label lListoEn8 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn8 = new TextField("0", skin);
-        final Label lmsL8 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess8 = new HorizontalGroup();
-        hgProcess8.addActor(lRafaga8);
-        hgProcess8.addActor(tfRafaga8);
-        hgProcess8.addActor(lms8);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga9 = new Label("Proceso 9: ", skin, "dark");
-        TextField tfRafaga9 = new TextField("1", skin);
-        Label lms9 = new Label("ms", skin, "dark");
-        final Label lListoEn9 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn9 = new TextField("0", skin);
-        final Label lmsL9 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess9 = new HorizontalGroup();
-        hgProcess9.addActor(lRafaga9);
-        hgProcess9.addActor(tfRafaga9);
-        hgProcess9.addActor(lms9);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga10 = new Label("Proceso 10: ", skin, "dark");
-        TextField tfRafaga10 = new TextField("1", skin);
-        Label lms10 = new Label("ms", skin, "dark");
-        final Label lListoEn10 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn10 = new TextField("0", skin);
-        final Label lmsL10 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess10 = new HorizontalGroup();
-        hgProcess10.addActor(lRafaga10);
-        hgProcess10.addActor(tfRafaga10);
-        hgProcess10.addActor(lms10);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga11 = new Label("Proceso 11: ", skin, "dark");
-        TextField tfRafaga11 = new TextField("1", skin);
-        Label lms11 = new Label("ms", skin, "dark");
-        final Label lListoEn11 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn11 = new TextField("0", skin);
-        final Label lmsL11 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess11 = new HorizontalGroup();
-        hgProcess11.addActor(lRafaga11);
-        hgProcess11.addActor(tfRafaga11);
-        hgProcess11.addActor(lms11);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga12 = new Label("Proceso 12: ", skin, "dark");
-        TextField tfRafaga12 = new TextField("1", skin);
-        Label lms12 = new Label("ms", skin, "dark");
-        final Label lListoEn12 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn12 = new TextField("0", skin);
-        final Label lmsL12 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess12 = new HorizontalGroup();
-        hgProcess12.addActor(lRafaga12);
-        hgProcess12.addActor(tfRafaga12);
-        hgProcess12.addActor(lms12);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga13 = new Label("Proceso 13: ", skin, "dark");
-        TextField tfRafaga13 = new TextField("1", skin);
-        Label lms13 = new Label("ms", skin, "dark");
-        final Label lListoEn13 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn13 = new TextField("0", skin);
-        final Label lmsL13 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess13 = new HorizontalGroup();
-        hgProcess13.addActor(lRafaga13);
-        hgProcess13.addActor(tfRafaga13);
-        hgProcess13.addActor(lms13);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga14 = new Label("Proceso 14: ", skin, "dark");
-        TextField tfRafaga14 = new TextField("1", skin);
-        Label lms14 = new Label("ms", skin, "dark");
-        final Label lListoEn14 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn14 = new TextField("0", skin);
-        final Label lmsL14 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess14 = new HorizontalGroup();
-        hgProcess14.addActor(lRafaga14);
-        hgProcess14.addActor(tfRafaga14);
-        hgProcess14.addActor(lms14);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        Label lRafaga15 = new Label("Proceso 15: ", skin, "dark");
-        TextField tfRafaga15 = new TextField("1", skin);
-        Label lms15 = new Label("ms", skin, "dark");
-        final Label lListoEn15 = new Label("Listo en: ", skin, "dark");
-        final TextField tfListoEn15 = new TextField("0", skin);
-        final Label lmsL15 = new Label("ms", skin, "dark");
-        final HorizontalGroup hgProcess15 = new HorizontalGroup();
-        hgProcess15.addActor(lRafaga15);
-        hgProcess15.addActor(tfRafaga15);
-        hgProcess15.addActor(lms15);
-        hgProcess1.addActor(lListoEn1);
-        hgProcess1.addActor(tfListoEn1);
-        hgProcess1.addActor(lmsL1);
-
-        final ScrollPane spProcess = new ScrollPane(vgProcess, skin);
+        final ScrollPane spProcess = new ScrollPane(vgProcesos, skin);
 
         Container container = new Container(spProcess);
-        container.height(200).padBottom(40);
+        container.height(300).padBottom(40);
         vg.addActor(container);
 
         sbProcessNumSel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                vgProcess.clearChildren();
+                vgProcesos.clearChildren();
                 switch (sbProcessNumSel.getSelectedIndex() + 1) {
-                    case 15:
-                        vgProcess.addActorAt(0, hgProcess15);
-                    case 14:
-                        vgProcess.addActorAt(0, hgProcess14);
-                    case 13:
-                        vgProcess.addActorAt(0, hgProcess13);
-                    case 12:
-                        vgProcess.addActorAt(0, hgProcess12);
-                    case 11:
-                        vgProcess.addActorAt(0, hgProcess11);
-                    case 10:
-                        vgProcess.addActorAt(0, hgProcess10);
-                    case 9:
-                        vgProcess.addActorAt(0, hgProcess9);
-                    case 8:
-                        vgProcess.addActorAt(0, hgProcess8);
-                    case 7:
-                        vgProcess.addActorAt(0, hgProcess7);
                     case 6:
-                        vgProcess.addActorAt(0, hgProcess6);
+                        //vgProcesos.addActorAt(0, hgProcess6);
                     case 5:
-                        vgProcess.addActorAt(0, hgProcess5);
+                        //vgProcesos.addActorAt(0, hgProcess5);
                     case 4:
-                        vgProcess.addActorAt(0, hgProcess4);
+                        vgProcesos.addActorAt(0, vgProc4);
                     case 3:
-                        vgProcess.addActorAt(0, hgProcess3);
+                        vgProcesos.addActorAt(0, vgProc3);
                     case 2:
-                        vgProcess.addActorAt(0, hgProcess2);
+                        vgProcesos.addActorAt(0, vgProc2);
                     case 1:
-                        vgProcess.addActorAt(0, hgProcess1);
+                        vgProcesos.addActorAt(0, vgProc1);
                 }
             }
 
