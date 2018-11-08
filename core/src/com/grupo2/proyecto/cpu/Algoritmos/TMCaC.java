@@ -46,16 +46,15 @@ public class TMCaC implements AlgoCPU {
 
     @Override
     public boolean simular() {
-        for (ActorProc aProc : aProcs) {
-            if (!aProc.getProceso().equals(activo)) {
-                aProc.desactivar();
-            }
-        }
         if (porTerminar == 0) {
             for (ActorProc aProc : aProcs) {
                 aProc.desactivar();
             }
             return true;
+        }
+        for (ActorProc aProc : aProcs) {
+            aProc.desactivar();
+            aProc.actualizar();
         }
         if (conmutActual != 0) {
             for (Proceso proceso : cola) {
@@ -71,6 +70,7 @@ public class TMCaC implements AlgoCPU {
             aProcs.get(procesos.indexOf(activo)).activar();
         }
         if (usar()) {
+            //aProcs.get(cola.indexOf(activo)).desactivar();
             nuevaEstimacion(activo);
             verSiTermino(activo);
             siguienteProceso();
@@ -106,9 +106,7 @@ public class TMCaC implements AlgoCPU {
         cola.sort(comparator);
         activo = cola.get(0);
         activo.esperando = false;
-        if (aux != activo.id) {
-            cContexto += 1;
-        }
+        cContexto += 1;
         conmutActual = conmut;
     }
 

@@ -57,27 +57,23 @@ public class RoundRobin implements AlgoCPU {
             nextIndex = 0;
             return;
         }
-        if (activo == null) {
             cContexto += 1;
             nextIndex += 1;
             activo = cola.get(nextIndex % cola.size());
-            aProcs.get(procesos.indexOf(activo)).activar();
             activo.esperando = false;
-        }
     }
 
     @Override
     public boolean simular() {
-        for (ActorProc aProc : aProcs) {
-            if (!aProc.getProceso().equals(activo)) {
-                aProc.desactivar();
-            }
-        }
         if (porTerminar == 0) {
             for (ActorProc aProc : aProcs) {
                 aProc.desactivar();
             }
             return true;
+        }
+        for (ActorProc aProc : aProcs) {
+            aProc.desactivar();
+            aProc.actualizar();
         }
         if (conmutActual != 0) {
             for (Proceso proceso : cola) {
@@ -88,13 +84,15 @@ public class RoundRobin implements AlgoCPU {
             t++;
             return false;
         }
-        siguienteProceso();
         nuevoProcListo();
+        if (activo != null) {
+            aProcs.get(procesos.indexOf(activo)).activar();
+        }
         if (cuantoActual == 0 || usar()) {
             verSiTermino(activo);
             cuantoActual = cuanto;
             conmutActual = conmut;
-            activo = null;
+            siguienteProceso();
         }
         t++;
         for (Proceso proceso : cola) {
