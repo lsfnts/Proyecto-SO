@@ -23,6 +23,7 @@ public class Proceso {
     public int tRetorno;
     boolean esperando;
     boolean terminado;
+    public boolean terRaf;
 
     public Proceso(int id, int[] tRafagas, int rafagas, int listoEn) {
         this.id = id;
@@ -41,9 +42,10 @@ public class Proceso {
     public boolean usarCPU() {
         t -= 1;
         if (t == 0) {
+            terRaf = true;
             tAnte = tRafagas[rafagaActual];
-            rafagaActual += 1;
-            if (rafagaActual == tRafagas.length) {
+            rafagaActual +=1;
+            if (rafagaActual== tRafagas.length) {
                 terminado = true;
                 rafagaActual = -1;
                 return true;
@@ -66,8 +68,8 @@ public class Proceso {
     }
 
     public void addtRetorno() {
-        if(!terminado){
-            tRetorno +=1;
+        if (!terminado) {
+            tRetorno += 1;
         }
     }
 

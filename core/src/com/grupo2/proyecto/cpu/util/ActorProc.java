@@ -36,7 +36,7 @@ public class ActorProc extends Container<Actor> {
 
     Proceso proceso;
 
-    public ActorProc(Skin skin,Proceso proceso, int num) {
+    public ActorProc(Skin skin, Proceso proceso, int num) {
         this.skin = skin;
         this.proceso = proceso;
         stack = new Stack();
@@ -67,14 +67,23 @@ public class ActorProc extends Container<Actor> {
         lRespuesta.setText("T. de respuesta:  " + proceso.tRespuesta + " ms");
         lEspera.setText("T. de espera:  " + proceso.tEspera + " ms");
         lRetorno.setText("T. de retorno:  " + proceso.tRetorno + " ms");
-        if(proceso.rafagaActual < 0) lRafagas.setText("terminado");
-        else lRafagas.setText("Rafaga:  " + (proceso.rafagaActual + 1));
-        lTiempo.setText("Restante Rafaga\nactual:  " + proceso.t + " ms");
+        if (proceso.rafagaActual < 0) {
+            lRafagas.setText("terminado");
+            lTiempo.setText("");
+        } else if (proceso.terRaf) {
+            lRafagas.setText("Rafaga:  " + (proceso.rafagaActual));
+            lTiempo.setText("Restante Rafaga\nactual:  " + 0 + " ms");
+            proceso.terRaf = false;
+        } else {
+            lRafagas.setText("Rafaga:  " + (proceso.rafagaActual+1));
+            lTiempo.setText("Restante Rafaga\nactual:  " + proceso.t + " ms");
+        }
     }
-    
+
     boolean flag;
+
     public void activar() {
-        if(!flag) {
+        if (!flag) {
             stack.add(active);
             flag = true;
         }
@@ -88,7 +97,7 @@ public class ActorProc extends Container<Actor> {
     public Proceso getProceso() {
         return proceso;
     }
-    
+
     public void terminar() {
         stack.add(new Container(new Image(skin.getDrawable("icon_check"))).size(90, 80).bottom().right().pad(8));
     }
