@@ -12,12 +12,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
+import com.grupo2.proyecto.cpu.Algoritmos.AlgoCPU;
+import com.grupo2.proyecto.cpu.Algoritmos.Proceso;
 import com.grupo2.proyecto.cpu.Algoritmos.RoundRobin;
-import com.grupo2.proyecto.cpu.util.ActorCPU;
+import com.grupo2.proyecto.cpu.util.ActorProc;
 
 /**
  *
@@ -27,32 +31,46 @@ public class CPUView {
     Skin skin;
     Stage stage;
     final Main main;
-    RoundRobin rr;
+    AlgoCPU algoCPU;
+    Table tProcesos;
+    boolean termino;
 
-    public CPUView(Main main, Skin skin, RoundRobin rr) {
+    public CPUView(Main main, Skin skin, AlgoCPU algoCPU) {
         this.main = main;
         this.skin = skin;
+        this.algoCPU = algoCPU;
         stage = new Stage(new FitViewport(1120, 900));
         Gdx.input.setInputProcessor(stage);
         
         final HorizontalGroup hg = new HorizontalGroup();
         hg.setFillParent(true);
-        hg.expand().pad(20).top().left();
+        hg.expand().space(20);
         stage.addActor(hg);
         
-        Table tProcesos = new Table();
-        for (int i = 0; i < rr.cola.size(); i++) {
-            tProcesos.add(new ActorCPU(skin));
-            if(i==3) tProcesos.row();
-        }
+        tProcesos = new Table();
+        //llenarProcesos();
         hg.addActor(tProcesos.top());
+        
+        VerticalGroup vgPanel = new VerticalGroup().space(20);
+        vgPanel.addActor(new Label("Round Robin", skin));
+        vgPanel.addActor(new Label("Cuanto: 3 ms", skin));
+        hg.addActor(vgPanel);
         
     }
     
+    float acumulador = 0.0f;
+    
     public void render(float delta){
+        acumulador += delta;
+        if(acumulador >= 1f && !termino){
+            acumulador -= 1f;
+            termino= algoCPU.simular();
+            tProcesos.clear();
+            llenarProcesos();
+        }
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(delta, 1 / 30f));
+        stage.act(1/30f);
         stage.draw();
     }
     
@@ -60,4 +78,10 @@ public class CPUView {
         stage.getViewport().update(width, height, true);
     }
     
+    public void llenarProcesos() {
+        for (int i = 0; i < algoCPU.getAProcs().size(); i++) {
+            tProcesos.add(algoCPU.getAProcs().get(i));
+            if(i%2 != 0) tProcesos.row();
+        }
+    }
 }
