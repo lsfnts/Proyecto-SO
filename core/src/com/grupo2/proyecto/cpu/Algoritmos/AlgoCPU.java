@@ -14,16 +14,17 @@ import java.util.ArrayList;
  * @author Luis
  */
 public interface AlgoCPU {
-
-    public void siguienteProceso();
-    
     public boolean simular();
 
-    public boolean usar();
-    
-    public void nuevoProcListo();
-
     public ArrayList<ActorProc> getAProcs();
+    
+    public float getPromedioRespuesta();
+    
+    public float getPromedioEspera();
+    
+    public float getPromedioRetorno();
+    
+    public int getCContexto();
     
     public int getT();
 }

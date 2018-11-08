@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.cpu.Algoritmos.Proceso;
 import com.grupo2.proyecto.cpu.Algoritmos.RoundRobin;
+import com.grupo2.proyecto.cpu.Algoritmos.TMCaC;
 import com.grupo2.proyecto.cpu.CPUScreen;
 import java.util.ArrayList;
 
@@ -487,8 +489,6 @@ public class CPUMenu extends ScreenAdapter {
         vgTipoAlgo.space(20);
         vg.addActor(vgTipoAlgo);
 
-        final TextButton buttonAccept = new TextButton("Aceptar", skin);
-
         vgTipoAlgo.addActor(new Label("Algoritmo", skin));
         final SelectBox selectBox = new SelectBox(skin);
         selectBox.setItems("Round Robin", "Tiempo mas corto a continuacion");
@@ -499,28 +499,44 @@ public class CPUMenu extends ScreenAdapter {
         hgCuanto.addActor(tfCuanto);
         hgCuanto.addActor(new Label(" ms", skin));
 
-        final Table tTmcc = new Table().pad(5);
-        tTmcc.add(new Label("Valor de a:", skin));
-        final TextField textA = new TextField("1", skin);
-        tTmcc.add(textA);
-        tTmcc.row().pad(10);
-        tTmcc.add(new Label("Estimacion inicial:", skin));
+        final Table tableTmcc = new Table().pad(5);
+        tableTmcc.add(new Label("Valor de a:", skin));
+        final TextField textA = new TextField("0", skin);
+        tableTmcc.add(textA);
+        tableTmcc.row().pad(10);
+        tableTmcc.add(new Label("Estimacion inicial:", skin));
         final TextField textEstimacion = new TextField("0", skin);
-        tTmcc.add(textEstimacion);
-        tTmcc.add(new Label(" ms", skin));
+        tableTmcc.add(textEstimacion);
+        tableTmcc.add(new Label(" ms", skin));
         vgTipoAlgo.addActor(hgCuanto);
 
-        vg.addActor(buttonAccept);
+        HorizontalGroup hgButtons = new HorizontalGroup().fill();
+        final TextButton buttonAccept = new TextButton("Aceptar", skin);
+        ImageButton ibBack = new ImageButton(skin.getDrawable("icon_back"));
+        ibBack.getImage().setFillParent(true);
+        hgButtons.addActor(new Container(ibBack).size(60).padRight(20));
+        buttonAccept.setFillParent(false);
+        hgButtons.addActor(buttonAccept);
+        vg.addActor(hgButtons);
+
         selectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (selectBox.getSelected().equals("Round Robin")) {
-                    vgTipoAlgo.removeActor(tTmcc);
+                    vgTipoAlgo.removeActor(tableTmcc);
                     vgTipoAlgo.addActor(hgCuanto);
                 } else {
                     vgTipoAlgo.removeActor(hgCuanto);
-                    vgTipoAlgo.addActor(tTmcc);
+                    vgTipoAlgo.addActor(tableTmcc);
                 }
+            }
+        });
+
+        ibBack.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                dispose();
+                main.setScreen(new MainMenu(main, skin));
             }
         });
 
@@ -535,35 +551,35 @@ public class CPUMenu extends ScreenAdapter {
                         proc6Rafs[1] = Integer.parseInt(tfProc6Raf2.getText());
                         proc6Rafs[2] = Integer.parseInt(tfProc6Raf3.getText());
                         proc6Rafs[3] = Integer.parseInt(tfProc6Raf4.getText());
-                        procesos.add(new Proceso(0, proc6Rafs, sbProc6RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto6.getText())));
+                        procesos.add(new Proceso(5, proc6Rafs, sbProc6RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto6.getText())));
                     case 4:
                         int[] proc5Rafs = new int[4];
                         proc5Rafs[0] = Integer.parseInt(tfProc5Raf1.getText());
                         proc5Rafs[1] = Integer.parseInt(tfProc5Raf2.getText());
                         proc5Rafs[2] = Integer.parseInt(tfProc5Raf3.getText());
                         proc5Rafs[3] = Integer.parseInt(tfProc5Raf4.getText());
-                        procesos.add(new Proceso(0, proc5Rafs, sbProc5RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto5.getText())));
+                        procesos.add(new Proceso(4, proc5Rafs, sbProc5RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto5.getText())));
                     case 3:
                         int[] proc4Rafs = new int[4];
                         proc4Rafs[0] = Integer.parseInt(tfProc4Raf1.getText());
                         proc4Rafs[1] = Integer.parseInt(tfProc4Raf2.getText());
                         proc4Rafs[2] = Integer.parseInt(tfProc4Raf3.getText());
                         proc4Rafs[3] = Integer.parseInt(tfProc4Raf4.getText());
-                        procesos.add(new Proceso(0, proc4Rafs, sbProc4RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto4.getText())));
+                        procesos.add(new Proceso(3, proc4Rafs, sbProc4RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto4.getText())));
                     case 2:
                         int[] proc3Rafs = new int[4];
                         proc3Rafs[0] = Integer.parseInt(tfProc3Raf1.getText());
                         proc3Rafs[1] = Integer.parseInt(tfProc3Raf2.getText());
                         proc3Rafs[2] = Integer.parseInt(tfProc3Raf3.getText());
                         proc3Rafs[3] = Integer.parseInt(tfProc3Raf4.getText());
-                        procesos.add(new Proceso(0, proc3Rafs, sbProc3RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto3.getText())));
+                        procesos.add(new Proceso(2, proc3Rafs, sbProc3RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto3.getText())));
                     case 1:
                         int[] proc2Rafs = new int[4];
                         proc2Rafs[0] = Integer.parseInt(tfProc2Raf1.getText());
                         proc2Rafs[1] = Integer.parseInt(tfProc2Raf2.getText());
                         proc2Rafs[2] = Integer.parseInt(tfProc2Raf3.getText());
                         proc2Rafs[3] = Integer.parseInt(tfProc2Raf4.getText());
-                        procesos.add(new Proceso(0, proc2Rafs, sbProc2RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto2.getText())));
+                        procesos.add(new Proceso(1, proc2Rafs, sbProc2RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto2.getText())));
                     case 0:
                         int[] proc1Rafs = new int[4];
                         proc1Rafs[0] = Integer.parseInt(tfProc1Raf1.getText());
@@ -572,9 +588,15 @@ public class CPUMenu extends ScreenAdapter {
                         proc1Rafs[3] = Integer.parseInt(tfProc1Raf4.getText());
                         procesos.add(new Proceso(0, proc1Rafs, sbProc1RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto1.getText())));
                 }
-                RoundRobin rr = new RoundRobin(procesos, Integer.parseInt(tfConmutacion.getText()),
-                        skin, Integer.parseInt(tfCuanto.getText()));
-                main.setScreen(new CPUScreen(main, skin, rr));
+                if (selectBox.getSelected().equals("Round Robin")) {
+                    RoundRobin rr = new RoundRobin(procesos, Integer.parseInt(tfConmutacion.getText()),
+                            skin, Integer.parseInt(tfCuanto.getText()));
+                    main.setScreen(new CPUScreen(main, skin, rr));
+                } else {
+                    TMCaC tmcc = new TMCaC(procesos, Integer.parseInt(tfConmutacion.getText()), skin,
+                            Float.parseFloat(textA.getText()), Integer.parseInt(textEstimacion.getText()));
+                     main.setScreen(new CPUScreen(main, skin, tmcc));
+                }
 
                 dispose();
             }

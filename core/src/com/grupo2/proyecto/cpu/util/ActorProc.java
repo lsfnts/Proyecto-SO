@@ -36,7 +36,7 @@ public class ActorProc extends Container<Actor> {
 
     Proceso proceso;
 
-    public ActorProc(Skin skin,Proceso proceso) {
+    public ActorProc(Skin skin,Proceso proceso, int num) {
         this.skin = skin;
         this.proceso = proceso;
         stack = new Stack();
@@ -46,7 +46,7 @@ public class ActorProc extends Container<Actor> {
         vg.padTop(12);
         stack.add(vg.top());
 
-        vg.addActor(new Label("1", skin, "dark"));
+        vg.addActor(new Label(String.valueOf(num), skin, "dark"));
         lRespuesta = new Label("T. de respuesta:  999 ms", skin, "small");
         vg.addActor(lRespuesta);
         lEspera = new Label("T. de espera:  999 ms", skin, "small");
@@ -83,5 +83,13 @@ public class ActorProc extends Container<Actor> {
     public void desactivar() {
         active.remove();
         flag = false;
+    }
+
+    public Proceso getProceso() {
+        return proceso;
+    }
+    
+    public void terminar() {
+        stack.add(new Container(new Image(skin.getDrawable("icon_check"))).size(90, 80).bottom().right().pad(8));
     }
 }
