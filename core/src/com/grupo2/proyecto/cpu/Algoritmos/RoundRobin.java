@@ -63,14 +63,16 @@ public class RoundRobin implements AlgoCPU{
     
     @Override
     public boolean simular() {
+        for (ActorProc aProc : aProcs) {
+            aProc.desactivar();
+        }
         if(conmutActual != 0) {
             conmutActual -= 1;
             return false;
         }
-        if(activo != null) aProcs.get(nextIndex % cola.size()).activar();
+        if(activo != null) aProcs.get(procesos.indexOf(activo)).activar();
         nuevoProcListo();
         if(cuantoActual == 0 || usar()) {
-            aProcs.get(cola.indexOf(activo)).desactivar();
             verSiTermino(activo);
             cuantoActual = cuanto;
             siguienteProceso();

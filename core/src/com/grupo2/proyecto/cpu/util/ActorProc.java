@@ -69,7 +69,7 @@ public class ActorProc extends Container<Actor> {
         lRetorno.setText("T. de retorno:  " + proceso.tRetorno + " ms");
         if(proceso.rafagaActual < 0) lRafagas.setText("terminado");
         else lRafagas.setText("Rafaga:  " + (proceso.rafagaActual + 1));
-        lTiempo.setText("Tiempo para Terminar\nRafaga:  " + proceso.t + " ms");
+        lTiempo.setText("Restante Rafaga\nactual:  " + proceso.t + " ms");
     }
     
     boolean flag;
