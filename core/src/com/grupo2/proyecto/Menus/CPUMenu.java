@@ -40,7 +40,6 @@ public class CPUMenu extends ScreenAdapter {
     Skin skin;
     Stage stage;
     final Main main;
-    ChangeListener clRafagaNum;
 
     public CPUMenu(final Main main, final Skin skin) {
         this.main = main;
@@ -187,7 +186,7 @@ public class CPUMenu extends ScreenAdapter {
                 hgProc2Raf2.remove();
                 hgProc2Raf3.remove();
                 hgProc2Raf4.remove();
-                switch (sbProc1RafagaNum.getSelectedIndex()) {
+                switch (sbProc2RafagaNum.getSelectedIndex()) {
                     case 3:
                         vgProc2.addActorAt(4, hgProc2Raf4);
                     case 2:
@@ -249,7 +248,7 @@ public class CPUMenu extends ScreenAdapter {
                 hgProc3Raf2.remove();
                 hgProc3Raf3.remove();
                 hgProc3Raf4.remove();
-                switch (sbProc1RafagaNum.getSelectedIndex()) {
+                switch (sbProc3RafagaNum.getSelectedIndex()) {
                     case 3:
                         vgProc3.addActorAt(4, hgProc3Raf4);
                     case 2:
@@ -311,7 +310,7 @@ public class CPUMenu extends ScreenAdapter {
                 hgProc4Raf2.remove();
                 hgProc4Raf3.remove();
                 hgProc4Raf4.remove();
-                switch (sbProc1RafagaNum.getSelectedIndex()) {
+                switch (sbProc4RafagaNum.getSelectedIndex()) {
                     case 3:
                         vgProc4.addActorAt(4, hgProc4Raf4);
                     case 2:
@@ -373,7 +372,7 @@ public class CPUMenu extends ScreenAdapter {
                 hgProc5Raf2.remove();
                 hgProc5Raf3.remove();
                 hgProc5Raf4.remove();
-                switch (sbProc1RafagaNum.getSelectedIndex()) {
+                switch (sbProc5RafagaNum.getSelectedIndex()) {
                     case 3:
                         vgProc5.addActorAt(4, hgProc5Raf4);
                     case 2:
@@ -435,7 +434,7 @@ public class CPUMenu extends ScreenAdapter {
                 hgProc6Raf2.remove();
                 hgProc6Raf3.remove();
                 hgProc6Raf4.remove();
-                switch (sbProc1RafagaNum.getSelectedIndex()) {
+                switch (sbProc6RafagaNum.getSelectedIndex()) {
                     case 3:
                         vgProc6.addActorAt(4, hgProc6Raf4);
                     case 2:
