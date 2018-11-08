@@ -76,7 +76,7 @@ public class CPUView {
             vgPanel.addActor(new Label("Round Robin", skin));
             vgPanel.addActor(new Label("Cuanto: 3 ms", skin));
         } else {
-            vgPanel.addActor(new Label("Tiempo mas corto a continuacion", skin));
+            vgPanel.addActor(new Label("Tiempo mas corto\na continuacion", skin));
             vgPanel.addActor(new Label("a: 3 ms", skin));
             vgPanel.addActor(new Label("estimacion inicial: 3 ms", skin));
         }
