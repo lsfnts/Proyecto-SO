@@ -10,13 +10,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.grupo2.proyecto.cpu.Algoritmos.Proceso;
+import com.grupo2.proyecto.cpu.algoritmos.Proceso;
 
 /**
  *
@@ -26,8 +25,7 @@ public class ActorProc extends Container<Actor> {
 
     Stack stack;
     Skin skin;
-    VerticalGroup vg;
-    Image active = new Image(new NinePatch(new Texture(Gdx.files.internal("glassPanel_corners.png")), 10, 10, 10, 10));
+    Image active = new Image(new NinePatch(new Texture(Gdx.files.internal("overlayCPU.png")), 10, 10, 10, 10));
     Label lRespuesta;
     Label lEspera;
     Label lRetorno;
@@ -41,7 +39,7 @@ public class ActorProc extends Container<Actor> {
         this.proceso = proceso;
         stack = new Stack();
         stack.add(new Container(new Image(skin.getDrawable("window_02"))).size(300, 250));
-        vg = new VerticalGroup();
+        VerticalGroup vg = new VerticalGroup();
         vg.setFillParent(true);
         vg.padTop(12);
         stack.add(vg.top());

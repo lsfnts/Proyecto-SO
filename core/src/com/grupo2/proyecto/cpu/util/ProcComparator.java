@@ -5,7 +5,7 @@
  */
 package com.grupo2.proyecto.cpu.util;
 
-import com.grupo2.proyecto.cpu.Algoritmos.Proceso;
+import com.grupo2.proyecto.cpu.algoritmos.Proceso;
 import java.util.Comparator;
 
 /**

@@ -1,11 +1,12 @@
 package com.grupo2.proyecto;
 
-import com.grupo2.proyecto.Menus.MainMenu;
+import com.grupo2.proyecto.menus.MainMenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.grupo2.proyecto.cpu.CPUScreen;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 public class Main extends Game {
 
@@ -30,8 +31,8 @@ public class Main extends Game {
         // La fuente
         skin.add("font", new BitmapFont(Gdx.files.internal("KenneyFuture.fnt")));
         skin.add("smallFont", new BitmapFont(Gdx.files.internal("KenneyFutureSmall.fnt")));
+        skin.add("mediumFont", new BitmapFont(Gdx.files.internal("KenneyFutureMedium.fnt")));
 
-        // Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skin.newDrawable("button_01");
         textButtonStyle.over = skin.newDrawable("button_02");
@@ -43,7 +44,7 @@ public class Main extends Game {
         selectBoxStyle.font = skin.getFont("font");
         selectBoxStyle.fontColor = Color.DARK_GRAY;
         List.ListStyle ls = new List.ListStyle(skin.getFont("font"),
-                Color.SLATE, Color.LIGHT_GRAY, skin.getDrawable("textbox_01"));
+                Color.DARK_GRAY, Color.SLATE, skin.getDrawable("textbox_01"));
         ls.background = skin.getDrawable("textbox_02");
         selectBoxStyle.listStyle = ls;
         selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
@@ -59,6 +60,8 @@ public class Main extends Game {
                 skin.getDrawable("knob_06"), skin.getDrawable("scroll_back_ver"),
                 skin.getDrawable("knob_05"));
         skin.add("default", scrollPaneStyle);
+        
+        
         
         Slider.SliderStyle sliderStyle = new Slider.SliderStyle();
         sliderStyle.background = skin.getDrawable("slider_back_hor");
@@ -76,6 +79,22 @@ public class Main extends Game {
         Label.LabelStyle labelStyleSA = new Label.LabelStyle(skin.getFont("smallFont"), Color.DARK_GRAY);
         skin.add("small", labelStyleSA);
         setScreen(new MainMenu(this, skin));
+        
+        Label.LabelStyle labelStyleMD = new Label.LabelStyle(skin.getFont("mediumFont"), Color.DARK_GRAY);
+        skin.add("medium", labelStyleMD);
+        setScreen(new MainMenu(this, skin));
+        
+        CheckBox.CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
+        checkBoxStyle.checkboxOff = skin.getDrawable("radiobox_off");
+        checkBoxStyle.checkboxOn = skin.getDrawable("radiobox_on");
+        checkBoxStyle.font = skin.getFont("font");
+        checkBoxStyle.fontColor = Color.DARK_GRAY;
+        skin.add("default", checkBoxStyle);
+        
+        Window.WindowStyle windowStyle = new Window.WindowStyle();
+        windowStyle.titleFont = skin.getFont("font");
+        windowStyle.background = skin.getDrawable("window_01");
+        skin.add("caja", windowStyle);
     }
 
     @Override

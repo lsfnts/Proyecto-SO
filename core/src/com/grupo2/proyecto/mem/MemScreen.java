@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.grupo2.proyecto.cpu;
+package com.grupo2.proyecto.mem;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.grupo2.proyecto.Main;
-import com.grupo2.proyecto.cpu.algoritmos.AlgoCPU;
+import com.grupo2.proyecto.mem.algoritmos.AlgoMem;
 
 /**
  *
  * @author Luis
  */
-public class CPUScreen extends ScreenAdapter{
+public class MemScreen extends ScreenAdapter{
     
-    private CPUView view;
+    private MemView view;
 
-    public CPUScreen(Main main, Skin skin, AlgoCPU algoCPU) {
-        view = new CPUView(main, skin, algoCPU);
+    public MemScreen(Main main, Skin skin, AlgoMem algoMem) {
+        view = new MemView(main, skin, algoMem);
         
     }
 
@@ -32,6 +32,4 @@ public class CPUScreen extends ScreenAdapter{
     public void resize(int width, int height) {
         view.resize(width, height);
     }
-    
-    
 }
