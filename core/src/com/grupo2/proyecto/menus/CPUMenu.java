@@ -60,6 +60,7 @@ public class CPUMenu extends ScreenAdapter {
         final SelectBox sbProcessNumSel = new SelectBox(skin);
         sbProcessNumSel.setItems(1, 2, 3, 4, 5, 6);
         sbProcessNumSel.setMaxListCount(4);
+        vg.addActor(hgProceesNumSel);
 
         final VerticalGroup vgProcesos = new VerticalGroup().pad(20);
 
@@ -470,7 +471,8 @@ public class CPUMenu extends ScreenAdapter {
         hgConmutacion.addActor(new Label("Tiempo de Conmutacion: ", skin));
         final TextField tfConmutacion = new TextField("1", skin);
         hgConmutacion.addActor(tfConmutacion);
-        hgConmutacion.addActor(new Label("ms", skin));
+        hgConmutacion.addActor(new Label(" ms", skin));
+        hgProceesNumSel.addActor(sbProcessNumSel);
         vg.addActor(hgConmutacion);
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
