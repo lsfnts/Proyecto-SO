@@ -6,6 +6,10 @@
 package com.grupo2.proyecto.menus.util;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -16,71 +20,65 @@ import java.util.ArrayList;
  *
  * @author Luis
  */
-public class InfoAcceso {
+public class InfoAccesoDis {
 
     ArrayList<Integer> nums;
-    ArrayList<ActorPageInfo> actors;
+    ArrayList<ActorDisAcInfo> actors;
     Skin skin;
     VerticalGroup vg;
     int i;
 
-    public InfoAcceso(Skin skin) {
+    public InfoAccesoDis(Skin skin) {
         this.skin = skin;
         nums = new ArrayList<Integer>();
-        actors = new ArrayList<ActorPageInfo>();
+        actors = new ArrayList<ActorDisAcInfo>();
         vg = new VerticalGroup().padRight(20);
     }
 
-    public void addAcceso(int n, boolean escritura) {
+    public void addAcceso(int n) {
         nums.add(n);
         TextButton tb = new TextButton("Eliminar", skin);
+        //lNum = new Label("# "+i, skin, "dark");vg = new VerticalGroup().space(10).pad(10);
+        //hg.addActor(lNum);
         tb.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 int pos = -1;
-                for (ActorPageInfo actI : actors) {
-                    if(actor.equals(actI.getTbEliminar())) {
+                for (ActorDisAcInfo actI : actors) {
+                    if (actor.equals(actI.getTbEliminar())) {
                         pos = actors.indexOf(actI);
                     }
                 }
                 deleteAcceso(pos);
             }
         });
-        actors.add(new ActorPageInfo(skin, n, escritura, tb, ++i));
-        vg.addActor(actors.get(actors.size()-1));
+        actors.add(new ActorDisAcInfo(skin, n, tb, ++i));
+        vg.addActor(actors.get(actors.size() - 1));
     }
 
     public void deleteAcceso(int pos) {
-        if(pos < 0) return;
+        if (pos < 0) {
+            return;
+        }
         nums.remove(pos);
         deleteAcceso(actors.get(pos));
     }
-    
-    public void deleteAcceso(ActorPageInfo pageInfo) {
-        pageInfo.vg.remove();
-        actors.remove(pageInfo);
-        i -=1;
+
+    public void deleteAcceso(ActorDisAcInfo DisAcInfo) {
+        DisAcInfo.vg.remove();
+        actors.remove(DisAcInfo);
+        i -= 1;
         int j = 0;
-        for (ActorPageInfo actor : actors) {
+        for (ActorDisAcInfo actor : actors) {
             actor.setNum(++j);
         }
     }
-    
+
     public ArrayList<Integer> getAccesos() {
         return this.nums;
     }
-    
-    public ArrayList<Integer> getAccesosNfu(int tR) {
-        int ii = tR;
-        while(ii < nums.size()){
-            nums.add(ii, -1);
-            ii += tR+1;
-        }
-        return this.nums;
-    }
-    
+
     public VerticalGroup getActor() {
         return this.vg;
     }
-
 }

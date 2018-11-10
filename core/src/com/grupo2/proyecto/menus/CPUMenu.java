@@ -514,7 +514,7 @@ public class CPUMenu extends ScreenAdapter {
         selectBox.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (selectBox.getSelected().equals("Round Robin")) {
+                if (selectBox.getSelectedIndex() == 0) {
                     vgTipoAlgo.removeActor(tableTmcc);
                     vgTipoAlgo.addActor(hgCuanto);
                 } else {

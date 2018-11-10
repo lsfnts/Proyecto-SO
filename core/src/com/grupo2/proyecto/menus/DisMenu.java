@@ -10,7 +10,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -25,120 +24,111 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
-import com.grupo2.proyecto.mem.MemScreen;
-import com.grupo2.proyecto.mem.algoritmos.AlgoMem;
 import com.grupo2.proyecto.mem.algoritmos.Fifo;
 import com.grupo2.proyecto.mem.algoritmos.Nfu;
-import com.grupo2.proyecto.menus.util.InfoAccesoMem;
+import com.grupo2.proyecto.menus.util.InfoAccesoDis;
 
 /**
  *
  * @author Luis
  */
-public class MemMenu extends ScreenAdapter {
+public class DisMenu extends ScreenAdapter {
 
     Skin skin;
     Stage stage;
     final Main main;
 
-    public MemMenu(final Main main, final Skin skin) {
+    public DisMenu(final Main main, final Skin skin) {
         this.main = main;
         this.skin = skin;
-        stage = new Stage(new FitViewport(1000, 800));
+        stage = new Stage(new FitViewport(1180, 800));
         Gdx.input.setInputProcessor(stage);
 
-        final VerticalGroup vg = new VerticalGroup();
-        vg.setFillParent(true);
-        vg.expand().space(20).pad(20);
-        stage.addActor(vg);
+        HorizontalGroup hg = new HorizontalGroup();
+        hg.setFillParent(true);
+        hg.expand().space(20).pad(20);
+        stage.addActor(hg);
 
-        HorizontalGroup hgMarcosNumSel = new HorizontalGroup();
-        Label lMarcosNumSel = new Label("Numero de marcos:", skin);
-        hgMarcosNumSel.addActor(lMarcosNumSel);
-        final SelectBox sbMarcosNumSel = new SelectBox(skin);
-        sbMarcosNumSel.setItems(1, 2, 3, 4, 5, 6);
-        sbMarcosNumSel.setMaxListCount(5);
-        hgMarcosNumSel.addActor(sbMarcosNumSel);
-        vg.addActor(hgMarcosNumSel);
-        HorizontalGroup hgAddAcceso = new HorizontalGroup().space(20).pad(15);
+        VerticalGroup vgPanel = new VerticalGroup().space(10);
+        hg.addActor(vgPanel);
 
-        VerticalGroup vgNum = new VerticalGroup().space(5);
-        HorizontalGroup hgAccesNum = new HorizontalGroup();
-        hgAccesNum.addActor(new Label("Pag. Virtual #", skin, "dark"));
-        final TextField tfAccesNum = new TextField("0", skin);
-        hgAccesNum.addActor(tfAccesNum);
-        vgNum.addActor(hgAccesNum);
-        final CheckBox cbEscritura = new CheckBox(" Lectura", skin);
-        vgNum.addActor(cbEscritura);
+        HorizontalGroup hgPosIni = new HorizontalGroup().padBottom(30);
+        Label lPosIni = new Label("Numero de marcos:", skin);
+        hgPosIni.addActor(lPosIni);
+        final SelectBox sbPosIni = new SelectBox(skin);
+        sbPosIni.setItems(1, 2, 3, 4, 5, 6);
+        sbPosIni.setMaxListCount(5);
+        hgPosIni.addActor(sbPosIni);
+        vgPanel.addActor(hgPosIni);
 
-        hgAddAcceso.addActor(vgNum);
+        vgPanel.addActor(new Label("velocidad de desplazamiento", skin));
+        HorizontalGroup hgTDesp = new HorizontalGroup().padBottom(60);
+        final TextField tfTDesp = new TextField("0", skin);
+        hgTDesp.addActor(tfTDesp);
+        hgTDesp.addActor(new Label(" ms", skin));
+        vgPanel.addActor(hgTDesp);
+
+        HorizontalGroup hgAddSolic = new HorizontalGroup().space(20).pad(15);
+        HorizontalGroup hgCilNum = new HorizontalGroup();
+        hgCilNum.addActor(new Label("Cilindro #", skin, "dark"));
+        final TextField tfCilNum = new TextField("0", skin);
+        hgCilNum.addActor(tfCilNum);
+
+        hgAddSolic.addActor(hgCilNum);
         TextButton agregar = new TextButton("Agregar", skin);
-        hgAddAcceso.addActor(agregar);
+        hgAddSolic.addActor(agregar);
         Table tAdd = new Table(skin);
         tAdd.setBackground(skin.getDrawable("textbox_01"));
-        tAdd.add(hgAddAcceso);
-        vg.addActor(new Container(tAdd));
-
-        final InfoAccesoMem ia = new InfoAccesoMem(skin);
-
-        final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
-        vg.addActor(new Container(spProcess).height(240).padBottom(10));
+        tAdd.add(hgAddSolic);
+        vgPanel.addActor(new Container(tAdd).padBottom(60));
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
         vgTipoAlgo.space(10);
 
         vgTipoAlgo.addActor(new Label("Algoritmo", skin));
         final SelectBox sbAlgo = new SelectBox(skin);
-        sbAlgo.setItems("FIFO", "NFU");
+        sbAlgo.setItems("SSF", "Elevador unidireccional");
         vgTipoAlgo.addActor(sbAlgo);
-        vg.addActor(vgTipoAlgo);
+        vgPanel.addActor(vgTipoAlgo);
 
-        final Table tableNFU = new Table().pad(5);
-        tableNFU.add(new Label("rondas para sumar R: ", skin));
-        final TextField tR = new TextField("0", skin);
-        tableNFU.add(tR);
-        tableNFU.row().pad(10);
-        tableNFU.add(new Label("Olvidar", skin));
-        final CheckBox cbOlvidar = new CheckBox("", skin);
-        tableNFU.add(cbOlvidar);
+        final HorizontalGroup hgDireccion = new HorizontalGroup();
+        hgDireccion.space(10);
 
-        HorizontalGroup hgButtons = new HorizontalGroup().space(60);
+        hgDireccion.addActor(new Label("Direccion", skin));
+        final SelectBox sbDir = new SelectBox(skin);
+        sbDir.setItems("Izquierda", "Derecha");
+        hgDireccion.addActor(sbDir);
+
+        HorizontalGroup hgButtons = new HorizontalGroup().space(60).padTop(60);
         final TextButton buttonAccept = new TextButton("Aceptar", skin);
         ImageButton ibBack = new ImageButton(skin.getDrawable("icon_back"));
         ibBack.getImage().setFillParent(true);
         ibBack.setFillParent(true);
         hgButtons.addActor(new Container(ibBack).size(60));
-        buttonAccept.pad(15);
+        buttonAccept.pad(10);
+        buttonAccept.invalidate();
         hgButtons.addActor(buttonAccept);
-        vg.addActor(hgButtons);
+        vgPanel.addActor(hgButtons);
 
-        cbEscritura.addListener(new ChangeListener() {
+        final InfoAccesoDis ia = new InfoAccesoDis(skin);
+        final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
+        hg.addActor(new Container(spProcess).size(470, 600).pad(10).center());
+
+        sbAlgo.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (cbEscritura.isChecked()) {
-                    cbEscritura.setText(" Escritura");
+                if (sbAlgo.getSelected().equals("Elevador unidireccional")) {
+                    vgTipoAlgo.addActor(hgDireccion);
                 } else {
-                    cbEscritura.setText(" Lectura");
+                    vgTipoAlgo.removeActor(hgDireccion);
                 }
-
             }
         });
 
         agregar.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                ia.addAcceso(Integer.valueOf(tfAccesNum.getText()), cbEscritura.isChecked());
-            }
-        });
-
-        sbAlgo.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (sbAlgo.getSelected().equals("NFU")) {
-                    vgTipoAlgo.addActor(tableNFU);
-                } else {
-                    vgTipoAlgo.removeActor(tableNFU);
-                }
+                ia.addAcceso(Integer.valueOf(tfCilNum.getText()));
             }
         });
 
@@ -153,16 +143,9 @@ public class MemMenu extends ScreenAdapter {
         buttonAccept.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                AlgoMem algoMem;
                 if (sbAlgo.getSelectedIndex() == 0) {
-                    algoMem = new Fifo(skin);
-                    algoMem.setAccesos(ia.getAccesos());
                 } else {
-                    algoMem = new Nfu(skin, Integer.valueOf(tR.getText()), cbOlvidar.isChecked());
-                    algoMem.setAccesos(ia.getAccesosNfu(Integer.valueOf(tR.getText())));
                 }
-                algoMem.setMarcos(sbMarcosNumSel.getSelectedIndex() + 1);
-                main.setScreen(new MemScreen(main, skin, algoMem));
                 dispose();
             }
         });
@@ -185,4 +168,5 @@ public class MemMenu extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
     }
+
 }

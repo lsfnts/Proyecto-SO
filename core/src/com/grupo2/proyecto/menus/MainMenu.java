@@ -73,6 +73,15 @@ public class MainMenu extends ScreenAdapter {
                 dispose();
             }
         });
+        
+        buttonDIS.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                
+                main.setScreen(new DisMenu(main, skin));
+                dispose();
+            }
+        });
     }
 
     @Override
