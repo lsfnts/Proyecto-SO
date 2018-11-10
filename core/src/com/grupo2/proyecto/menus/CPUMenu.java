@@ -61,19 +61,8 @@ public class CPUMenu extends ScreenAdapter {
         sbProcessNumSel.setItems(1, 2, 3, 4, 5, 6);
         sbProcessNumSel.setMaxListCount(4);
 
-        hgProceesNumSel.addActor(sbProcessNumSel);
-        vg.addActor(hgProceesNumSel);
-
         final VerticalGroup vgProcesos = new VerticalGroup().pad(20);
 
-        Container cSeparador1 = new Container(new Image(skin.getDrawable("slider_back_hor")));
-        cSeparador1.width(400).pad(10);
-        Container cSeparador2 = new Container(new Image(skin.getDrawable("slider_back_hor")));
-        cSeparador2.width(400).pad(10);
-        Container cSeparador3 = new Container(new Image(skin.getDrawable("slider_back_hor")));
-        cSeparador3.width(400).pad(10);
-        Container cSeparador4 = new Container(new Image(skin.getDrawable("slider_back_hor")));
-        cSeparador4.width(400).pad(10);
         Container cSeparador5 = new Container(new Image(skin.getDrawable("slider_back_hor")));
         cSeparador5.width(400).pad(10);
 
@@ -140,7 +129,7 @@ public class CPUMenu extends ScreenAdapter {
         vgProcesos.addActor(vgProc1);
 
         final VerticalGroup vgProc2 = new VerticalGroup();
-        vgProc2.addActor(cSeparador1);
+        vgProc2.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(0));
         vgProc2.addActor(new Label("Proceso 2:", skin, "dark"));
 
         HorizontalGroup hgProc2Listo = new HorizontalGroup();
@@ -202,7 +191,7 @@ public class CPUMenu extends ScreenAdapter {
         vgProc2.addActor(hgProc2Raf1);
 
         final VerticalGroup vgProc3 = new VerticalGroup();
-        vgProc3.addActor(cSeparador2);
+        vgProc3.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(0));
         vgProc3.addActor(new Label("Proceso 3:", skin, "dark"));
 
         HorizontalGroup hgProc3Listo = new HorizontalGroup();
@@ -264,7 +253,7 @@ public class CPUMenu extends ScreenAdapter {
         vgProc3.addActor(hgProc3Raf1);
 
         final VerticalGroup vgProc4 = new VerticalGroup();
-        vgProc4.addActor(cSeparador3);
+        vgProc4.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(0));
         vgProc4.addActor(new Label("Proceso 4:", skin, "dark"));
 
         HorizontalGroup hgProc4Listo = new HorizontalGroup();
@@ -326,7 +315,7 @@ public class CPUMenu extends ScreenAdapter {
         vgProc4.addActor(hgProc4Raf1);
 
         final VerticalGroup vgProc5 = new VerticalGroup();
-        vgProc5.addActor(cSeparador4);
+        vgProc5.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(0));
         vgProc5.addActor(new Label("Proceso 5:", skin, "dark"));
 
         HorizontalGroup hgProc5Listo = new HorizontalGroup();
@@ -388,7 +377,7 @@ public class CPUMenu extends ScreenAdapter {
         vgProc5.addActor(hgProc5Raf1);
 
         final VerticalGroup vgProc6 = new VerticalGroup();
-        vgProc6.addActor(cSeparador5);
+        vgProc6.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(0));
         vgProc6.addActor(new Label("Proceso 6:", skin, "dark"));
 
         HorizontalGroup hgProc6Listo = new HorizontalGroup();
@@ -507,7 +496,7 @@ public class CPUMenu extends ScreenAdapter {
         final TextField textEstimacion = new TextField("0", skin);
         tableTmcc.add(textEstimacion);
         tableTmcc.add(new Label(" ms", skin));
-        
+
         vgTipoAlgo.addActor(hgCuanto);
 
         HorizontalGroup hgButtons = new HorizontalGroup().space(60);
