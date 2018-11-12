@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 
 public class Main extends Game {
 
@@ -38,6 +39,12 @@ public class Main extends Game {
         textButtonStyle.over = skin.newDrawable("button_02");
         textButtonStyle.font = skin.getFont("font");
         skin.add("default", textButtonStyle);
+        
+        TextButton.TextButtonStyle textButtonStyleS = new TextButton.TextButtonStyle();
+        textButtonStyleS.up = skin.newDrawable("textbox_02");
+        textButtonStyleS.font = skin.getFont("mediumFont");
+        textButtonStyleS.fontColor = Color.DARK_GRAY;
+        skin.add("caja", textButtonStyleS);
         
         SelectBox.SelectBoxStyle selectBoxStyle = new SelectBox.SelectBoxStyle();
         selectBoxStyle.background = skin.getDrawable("selectbox_01");
@@ -67,6 +74,13 @@ public class Main extends Game {
         sliderStyle.background = skin.getDrawable("slider_back_hor");
         sliderStyle.knob = skin.getDrawable("knob_05");
         skin.add("default-horizontal", sliderStyle);
+        
+        Slider.SliderStyle sliderStyleB = new Slider.SliderStyle();
+        sliderStyleB.background = new BaseDrawable();
+        sliderStyleB.knob = skin.getDrawable("knob_03");
+        sliderStyleB.knob.setMinHeight(40);
+        sliderStyleB.knob.setMinWidth(30);
+        skin.add("brazo", sliderStyleB);
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(skin.getFont("font"), Color.LIGHT_GRAY);
         skin.add("default", labelStyle);
@@ -95,6 +109,12 @@ public class Main extends Game {
         windowStyle.titleFont = skin.getFont("font");
         windowStyle.background = skin.getDrawable("window_01");
         skin.add("caja", windowStyle);
+        
+        Window.WindowStyle windowStyleCi = new Window.WindowStyle();
+        windowStyleCi.titleFont = skin.getFont("smallFont");
+        windowStyleCi.background = skin.getDrawable("window_01");
+        skin.add("cilindro", windowStyleCi);
+        
     }
 
     @Override

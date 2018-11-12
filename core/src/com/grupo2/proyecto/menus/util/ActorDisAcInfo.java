@@ -22,15 +22,15 @@ public class ActorDisAcInfo extends Container<Actor> {
 
     TextButton tbEliminar;
     VerticalGroup vg;
-    Label lNum;
-    
+    //Label lNum;
+
     public ActorDisAcInfo(Skin skin, int n, TextButton tbEliminar, int i) {
         this.tbEliminar = tbEliminar;
-        lNum = new Label("# "+i, skin, "dark");
+        //lNum = new Label("# "+i, skin, "dark");
         vg = new VerticalGroup().space(10).pad(10);
         HorizontalGroup hg = new HorizontalGroup();
-        hg.addActor(lNum);
-        hg.addActor(new Label(" =  Cil. " + n+" ", skin, "dark"));
+        //hg.addActor(lNum);
+        hg.addActor(new Label(" Cil. " + n + " ", skin, "dark"));
         hg.addActor(tbEliminar);
         vg.addActor(hg);
         vg.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).size(200, 10));
@@ -40,8 +40,5 @@ public class ActorDisAcInfo extends Container<Actor> {
     public TextButton getTbEliminar() {
         return tbEliminar;
     }
-    
-    public void setNum(int i) {
-        lNum.setText("# "+i);
-    }
+
 }

@@ -177,7 +177,7 @@ public class CPUView {
 
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        hg.expand();
+        //hg.expand();
     }
 
     public void llenarProcesos() {

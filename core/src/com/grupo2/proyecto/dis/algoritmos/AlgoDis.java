@@ -5,10 +5,26 @@
  */
 package com.grupo2.proyecto.dis.algoritmos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Luis
  */
 public interface AlgoDis {
-    
+
+    public boolean simular();
+
+    public void addAcceso(int a);
+
+    public void setAccesos(ArrayList accesos, int inicial);
+
+    public int getDesp();
+
+    public int getPos();
+
+    public int getTiempo();
+
+    public ArrayList<Integer> getAccesos();
+
 }

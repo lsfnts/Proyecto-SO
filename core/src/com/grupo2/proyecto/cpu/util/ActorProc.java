@@ -31,6 +31,7 @@ public class ActorProc extends Container<Actor> {
     Label lRetorno;
     Label lRafagas;
     Label lTiempo;
+    Label lEstimacion;
 
     Proceso proceso;
 
@@ -45,16 +46,18 @@ public class ActorProc extends Container<Actor> {
         stack.add(vg.top());
 
         vg.addActor(new Label(String.valueOf(num), skin, "dark"));
-        lRespuesta = new Label("T. de respuesta:  999 ms", skin, "small");
+        lRespuesta = new Label("T. de respuesta:  0 ms", skin, "small");
         vg.addActor(lRespuesta);
-        lEspera = new Label("T. de espera:  999 ms", skin, "small");
+        lEspera = new Label("T. de espera:  0 ms", skin, "small");
         vg.addActor(lEspera);
-        lRetorno = new Label("T. de retorno:  999 ms", skin, "small");
+        lRetorno = new Label("T. de retorno:  0 ms", skin, "small");
         vg.addActor(lRetorno);
-        lRafagas = new Label("Rafaga:  1", skin, "small");
+        lRafagas = new Label("Rafaga:  0", skin, "small");
         vg.addActor(lRafagas);
-        lTiempo = new Label("Tiempo para Terminar\nRafaga:  20 ms", skin, "small");
+        lTiempo = new Label("Rafaga actual:  0 ms", skin, "small");
         vg.addActor(lTiempo);
+        lEstimacion = new Label("", skin, "small");
+        vg.addActor(lEstimacion);
 
         this.width(320);
         this.height(270);
@@ -70,11 +73,16 @@ public class ActorProc extends Container<Actor> {
             lTiempo.setText("");
         } else if (proceso.terRaf) {
             lRafagas.setText("Rafaga:  " + (proceso.rafagaActual));
-            lTiempo.setText("Restante Rafaga\nactual:  " + 0 + " ms");
+            lTiempo.setText("Rafaga actual:  " + 0 + " ms");
             proceso.terRaf = false;
         } else {
             lRafagas.setText("Rafaga:  " + (proceso.rafagaActual+1));
-            lTiempo.setText("Restante Rafaga\nactual:  " + proceso.t + " ms");
+            lTiempo.setText("Rafaga actual:  " + proceso.t + " ms");
+        }
+        if(proceso.en >= 0) {
+            lEstimacion.setText("estimacion:  "+proceso.en+" ms");
+        } else {
+            lEstimacion.setText("");
         }
     }
 

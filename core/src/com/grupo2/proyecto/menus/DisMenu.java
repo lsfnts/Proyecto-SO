@@ -24,6 +24,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
+import com.grupo2.proyecto.dis.DisScreen;
+import com.grupo2.proyecto.dis.algoritmos.AlgoDis;
+import com.grupo2.proyecto.dis.algoritmos.Ssf;
 import com.grupo2.proyecto.mem.algoritmos.Fifo;
 import com.grupo2.proyecto.mem.algoritmos.Nfu;
 import com.grupo2.proyecto.menus.util.InfoAccesoDis;
@@ -41,7 +44,7 @@ public class DisMenu extends ScreenAdapter {
     public DisMenu(final Main main, final Skin skin) {
         this.main = main;
         this.skin = skin;
-        stage = new Stage(new FitViewport(1180, 800));
+        stage = new Stage(new FitViewport(1100, 800));
         Gdx.input.setInputProcessor(stage);
 
         HorizontalGroup hg = new HorizontalGroup();
@@ -53,28 +56,28 @@ public class DisMenu extends ScreenAdapter {
         hg.addActor(vgPanel);
 
         HorizontalGroup hgPosIni = new HorizontalGroup().padBottom(30);
-        Label lPosIni = new Label("Numero de marcos:", skin);
+        Label lPosIni = new Label("Posicion inicial:", skin);
         hgPosIni.addActor(lPosIni);
         final SelectBox sbPosIni = new SelectBox(skin);
-        sbPosIni.setItems(1, 2, 3, 4, 5, 6);
+        sbPosIni.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
         sbPosIni.setMaxListCount(5);
         hgPosIni.addActor(sbPosIni);
         vgPanel.addActor(hgPosIni);
 
         vgPanel.addActor(new Label("velocidad de desplazamiento", skin));
         HorizontalGroup hgTDesp = new HorizontalGroup().padBottom(60);
-        final TextField tfTDesp = new TextField("0", skin);
+        final TextField tfTDesp = new TextField("1", skin);
         hgTDesp.addActor(tfTDesp);
         hgTDesp.addActor(new Label(" ms", skin));
         vgPanel.addActor(hgTDesp);
 
         HorizontalGroup hgAddSolic = new HorizontalGroup().space(20).pad(15);
-        HorizontalGroup hgCilNum = new HorizontalGroup();
-        hgCilNum.addActor(new Label("Cilindro #", skin, "dark"));
-        final TextField tfCilNum = new TextField("0", skin);
-        hgCilNum.addActor(tfCilNum);
+        hgAddSolic.addActor(new Label("Cilindro #", skin, "dark"));
+        final SelectBox sbCilNum = new SelectBox(skin);
+        sbCilNum.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
+        sbCilNum.setMaxListCount(5);
+        hgAddSolic.addActor(sbCilNum);
 
-        hgAddSolic.addActor(hgCilNum);
         TextButton agregar = new TextButton("Agregar", skin);
         hgAddSolic.addActor(agregar);
         Table tAdd = new Table(skin);
@@ -112,7 +115,7 @@ public class DisMenu extends ScreenAdapter {
 
         final InfoAccesoDis ia = new InfoAccesoDis(skin);
         final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
-        hg.addActor(new Container(spProcess).size(470, 600).pad(10).center());
+        hg.addActor(new Container(spProcess).size(400, 600).pad(10).center());
 
         sbAlgo.addListener(new ChangeListener() {
             @Override
@@ -128,7 +131,7 @@ public class DisMenu extends ScreenAdapter {
         agregar.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                ia.addAcceso(Integer.valueOf(tfCilNum.getText()));
+                ia.addAcceso(sbCilNum.getSelectedIndex());
             }
         });
 
@@ -143,9 +146,13 @@ public class DisMenu extends ScreenAdapter {
         buttonAccept.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                AlgoDis algoDis = null;
                 if (sbAlgo.getSelectedIndex() == 0) {
+                    algoDis = new Ssf(sbPosIni.getSelectedIndex(),Integer.valueOf(tfTDesp.getText()));
                 } else {
                 }
+                algoDis.setAccesos(ia.getAccesos(), sbPosIni.getSelectedIndex());
+                main.setScreen(new DisScreen(main, skin, algoDis));
                 dispose();
             }
         });

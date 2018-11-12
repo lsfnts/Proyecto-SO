@@ -33,6 +33,7 @@ public class Proceso {
         rafagaActual = 0;
         t = this.tRafagas[rafagaActual];
         esperando = true;
+        en = -1;
     }
 
     /**

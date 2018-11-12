@@ -39,7 +39,6 @@ public class MemView {
     Stage stage;
     final Main main;
     AlgoMem algoMem;
-    final HorizontalGroup hg;
     Table tMarcos;
     Stack[] marcos;
     
@@ -55,7 +54,7 @@ public class MemView {
         this.algoMem = algoMem;
         stage = new Stage(new FitViewport(1300, 900));
         
-        hg = new HorizontalGroup();
+        HorizontalGroup hg = new HorizontalGroup();
         hg.setFillParent(true);
         hg.expand().space(20).top().pad(80);
         stage.addActor(hg);
@@ -65,7 +64,7 @@ public class MemView {
         hg.addActor(tMarcos);
         marcos = new Stack[algoMem.getMarcosMax()];
         for (int i = 0; i < algoMem.getMarcosMax(); i++) {
-            marcos[i] = new Stack(new Window("\n    "+String.valueOf(i), skin, "caja"));
+            marcos[i] = new Stack(new Window("\n"+String.valueOf(i), skin, "caja"));
             tMarcos.add(marcos[i]).width(285).height(225).pad(15).center();
             if(i%2 != 0) tMarcos.row();
         }
@@ -75,7 +74,6 @@ public class MemView {
             vgPanel.addActor(new Label("FIFO", skin));
         } else {
             vgPanel.addActor(new Label("NFU", skin));
-            vgPanel.addActor(new Label("", skin));
         }
         
         

@@ -6,10 +6,6 @@
 package com.grupo2.proyecto.menus.util;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -38,8 +34,6 @@ public class InfoAccesoDis {
     public void addAcceso(int n) {
         nums.add(n);
         TextButton tb = new TextButton("Eliminar", skin);
-        //lNum = new Label("# "+i, skin, "dark");vg = new VerticalGroup().space(10).pad(10);
-        //hg.addActor(lNum);
         tb.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
@@ -68,10 +62,6 @@ public class InfoAccesoDis {
         DisAcInfo.vg.remove();
         actors.remove(DisAcInfo);
         i -= 1;
-        int j = 0;
-        for (ActorDisAcInfo actor : actors) {
-            actor.setNum(++j);
-        }
     }
 
     public ArrayList<Integer> getAccesos() {

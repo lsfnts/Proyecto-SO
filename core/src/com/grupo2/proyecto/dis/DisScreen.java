@@ -18,17 +18,17 @@ public class DisScreen extends ScreenAdapter{
     private DisView view;
 
     public DisScreen(Main main, Skin skin, AlgoDis algoDis) {
-        //view = new DisView(main, skin, algoDis);
+        view = new DisView(main, skin, algoDis);
         
     }
 
     @Override
     public void render(float delta) {
-        //view.render(delta);
+        view.render(delta);
     }
 
     @Override
     public void resize(int width, int height) {
-        //view.resize(width, height);
+        view.resize(width, height);
     }
 }
