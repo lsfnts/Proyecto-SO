@@ -44,13 +44,16 @@ public class MemMenu extends ScreenAdapter {
     public MemMenu(final Main main, final Skin skin) {
         this.main = main;
         this.skin = skin;
-        stage = new Stage(new FitViewport(1000, 800));
+        stage = new Stage(new FitViewport(1300, 800));
         Gdx.input.setInputProcessor(stage);
 
-        final VerticalGroup vg = new VerticalGroup();
-        vg.setFillParent(true);
-        vg.expand().space(20).pad(20);
-        stage.addActor(vg);
+        final HorizontalGroup hg = new HorizontalGroup();
+        hg.setFillParent(true);
+        hg.expand().space(20).pad(20);
+        
+        final VerticalGroup vg = new VerticalGroup().space(20).pad(20);
+        hg.addActor(vg);
+        stage.addActor(hg);
 
         HorizontalGroup hgMarcosNumSel = new HorizontalGroup();
         Label lMarcosNumSel = new Label("Numero de marcos:", skin);
@@ -66,7 +69,7 @@ public class MemMenu extends ScreenAdapter {
         HorizontalGroup hgAccesNum = new HorizontalGroup();
         hgAccesNum.addActor(new Label("Pag. Virtual #", skin, "dark"));
         final TextField tfAccesNum = new TextField("0", skin);
-        hgAccesNum.addActor(tfAccesNum);
+        hgAccesNum.addActor(new Container(tfAccesNum).width(100));
         vgNum.addActor(hgAccesNum);
         final CheckBox cbEscritura = new CheckBox(" Lectura", skin);
         vgNum.addActor(cbEscritura);
@@ -82,7 +85,7 @@ public class MemMenu extends ScreenAdapter {
         final InfoAccesoMem ia = new InfoAccesoMem(skin);
 
         final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
-        vg.addActor(new Container(spProcess).height(240).padBottom(10));
+        hg.addActor(new Container(spProcess).size(560,600).padBottom(10));
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
         vgTipoAlgo.space(10);
