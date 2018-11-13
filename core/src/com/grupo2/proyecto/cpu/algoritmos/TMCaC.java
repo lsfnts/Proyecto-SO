@@ -116,6 +116,7 @@ public class TMCaC implements AlgoCPU {
 
     private void nuevoProcListo() {
         for (Proceso proceso : procesos) {
+            
             if (proceso.listoEn == t) {
                 proceso.en = e0;
                 cola.add(proceso);

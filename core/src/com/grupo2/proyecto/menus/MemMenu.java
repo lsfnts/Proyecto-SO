@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.mem.MemScreen;
@@ -30,6 +31,9 @@ import com.grupo2.proyecto.mem.algoritmos.AlgoMem;
 import com.grupo2.proyecto.mem.algoritmos.Fifo;
 import com.grupo2.proyecto.mem.algoritmos.Nfu;
 import com.grupo2.proyecto.menus.util.InfoAccesoMem;
+import com.grupo2.proyecto.menus.util.json.JsonInfoMemoria;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -50,7 +54,7 @@ public class MemMenu extends ScreenAdapter {
         final HorizontalGroup hg = new HorizontalGroup();
         hg.setFillParent(true);
         hg.expand().space(20).pad(20);
-        
+
         final VerticalGroup vg = new VerticalGroup().space(20).pad(20);
         hg.addActor(vg);
         stage.addActor(hg);
@@ -85,7 +89,7 @@ public class MemMenu extends ScreenAdapter {
         final InfoAccesoMem ia = new InfoAccesoMem(skin);
 
         final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
-        hg.addActor(new Container(spProcess).size(560,600).padBottom(10));
+        hg.addActor(new Container(spProcess).size(560, 600).padBottom(10));
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
         vgTipoAlgo.space(10);
@@ -105,12 +109,14 @@ public class MemMenu extends ScreenAdapter {
         final CheckBox cbOlvidar = new CheckBox("", skin);
         tableNFU.add(cbOlvidar);
 
-        HorizontalGroup hgButtons = new HorizontalGroup().space(60);
-        final TextButton buttonAccept = new TextButton("Aceptar", skin);
+        HorizontalGroup hgButtons = new HorizontalGroup().space(40);
         ImageButton ibBack = new ImageButton(skin.getDrawable("icon_back"));
         ibBack.getImage().setFillParent(true);
         ibBack.setFillParent(true);
         hgButtons.addActor(new Container(ibBack).size(60));
+        CheckBox cbLeer = new CheckBox(" Leer de archivo", skin);
+        hgButtons.addActor(cbLeer);
+        final TextButton buttonAccept = new TextButton("Aceptar", skin);
         buttonAccept.pad(15);
         hgButtons.addActor(buttonAccept);
         vg.addActor(hgButtons);
@@ -157,14 +163,32 @@ public class MemMenu extends ScreenAdapter {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 AlgoMem algoMem;
-                if (sbAlgo.getSelectedIndex() == 0) {
-                    algoMem = new Fifo(skin);
-                    algoMem.setAccesos(ia.getAccesos());
+                if (cbLeer.isChecked()) {
+                    Json json = new Json();
+                    json.setIgnoreUnknownFields(true);
+                    JsonInfoMemoria infoMemoria = json.fromJson(JsonInfoMemoria.class, Gdx.files.local("Memoria.json"));
+                    if(infoMemoria.algoritmo == 0) {
+                        algoMem = new Fifo(skin);
+                        algoMem.setAccesos(new ArrayList<>(Arrays.asList(infoMemoria.solicitudes)));
+                    } else {
+                        algoMem = new Nfu(skin, infoMemoria.RondasParaSumarR, infoMemoria.sumarIzquierda);
+                        ia.deleteaLL();
+                        for (int i = 0; i < infoMemoria.solicitudes.length; i++) {
+                            ia.addAcceso(infoMemoria.solicitudes[i], false);
+                        }
+                        algoMem.setAccesos(ia.getAccesosNfu(infoMemoria.RondasParaSumarR));
+                    }
+                    algoMem.setMarcos(infoMemoria.MarcosDisponibles);
                 } else {
-                    algoMem = new Nfu(skin, Integer.valueOf(tR.getText()), cbOlvidar.isChecked());
-                    algoMem.setAccesos(ia.getAccesosNfu(Integer.valueOf(tR.getText())));
+                    if (sbAlgo.getSelectedIndex() == 0) {
+                        algoMem = new Fifo(skin);
+                        algoMem.setAccesos(ia.getAccesos());
+                    } else {
+                        algoMem = new Nfu(skin, Integer.valueOf(tR.getText()), cbOlvidar.isChecked());
+                        algoMem.setAccesos(ia.getAccesosNfu(Integer.valueOf(tR.getText())));
+                    }
+                    algoMem.setMarcos(sbMarcosNumSel.getSelectedIndex() + 1);
                 }
-                algoMem.setMarcos(sbMarcosNumSel.getSelectedIndex() + 1);
                 main.setScreen(new MemScreen(main, skin, algoMem));
                 dispose();
             }

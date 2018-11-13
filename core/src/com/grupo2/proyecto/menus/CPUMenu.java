@@ -10,6 +10,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.cpu.algoritmos.Proceso;
@@ -30,6 +32,8 @@ import com.grupo2.proyecto.cpu.algoritmos.RoundRobin;
 import com.grupo2.proyecto.cpu.algoritmos.TMCaC;
 import com.grupo2.proyecto.cpu.CPUScreen;
 import com.grupo2.proyecto.cpu.algoritmos.AlgoCPU;
+import com.grupo2.proyecto.menus.util.json.JsonInfoCpu;
+import com.grupo2.proyecto.menus.util.json.JsonInfoProceso;
 import java.util.ArrayList;
 
 /**
@@ -501,12 +505,14 @@ public class CPUMenu extends ScreenAdapter {
 
         vgTipoAlgo.addActor(hgCuanto);
 
-        HorizontalGroup hgButtons = new HorizontalGroup().space(60);
+        HorizontalGroup hgButtons = new HorizontalGroup().space(40);
         final TextButton buttonAccept = new TextButton("Aceptar", skin);
         ImageButton ibBack = new ImageButton(skin.getDrawable("icon_back"));
         ibBack.getImage().setFillParent(true);
         ibBack.setFillParent(true);
         hgButtons.addActor(new Container(ibBack).size(60));
+        CheckBox cbLeer = new CheckBox(" Leer de archivo", skin);
+        hgButtons.addActor(cbLeer);
         buttonAccept.pad(15);
         hgButtons.addActor(buttonAccept);
         vg.addActor(hgButtons);
@@ -535,58 +541,77 @@ public class CPUMenu extends ScreenAdapter {
         buttonAccept.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                ArrayList<Proceso> procesos = new ArrayList<Proceso>(4);
-                switch (sbProcessNumSel.getSelectedIndex()) {
-                    case 5:
-                        int[] proc6Rafs = new int[4];
-                        proc6Rafs[0] = Integer.parseInt(tfProc6Raf1.getText());
-                        proc6Rafs[1] = Integer.parseInt(tfProc6Raf2.getText());
-                        proc6Rafs[2] = Integer.parseInt(tfProc6Raf3.getText());
-                        proc6Rafs[3] = Integer.parseInt(tfProc6Raf4.getText());
-                        procesos.add(new Proceso(5, proc6Rafs, sbProc6RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto6.getText())));
-                    case 4:
-                        int[] proc5Rafs = new int[4];
-                        proc5Rafs[0] = Integer.parseInt(tfProc5Raf1.getText());
-                        proc5Rafs[1] = Integer.parseInt(tfProc5Raf2.getText());
-                        proc5Rafs[2] = Integer.parseInt(tfProc5Raf3.getText());
-                        proc5Rafs[3] = Integer.parseInt(tfProc5Raf4.getText());
-                        procesos.add(new Proceso(4, proc5Rafs, sbProc5RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto5.getText())));
-                    case 3:
-                        int[] proc4Rafs = new int[4];
-                        proc4Rafs[0] = Integer.parseInt(tfProc4Raf1.getText());
-                        proc4Rafs[1] = Integer.parseInt(tfProc4Raf2.getText());
-                        proc4Rafs[2] = Integer.parseInt(tfProc4Raf3.getText());
-                        proc4Rafs[3] = Integer.parseInt(tfProc4Raf4.getText());
-                        procesos.add(new Proceso(3, proc4Rafs, sbProc4RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto4.getText())));
-                    case 2:
-                        int[] proc3Rafs = new int[4];
-                        proc3Rafs[0] = Integer.parseInt(tfProc3Raf1.getText());
-                        proc3Rafs[1] = Integer.parseInt(tfProc3Raf2.getText());
-                        proc3Rafs[2] = Integer.parseInt(tfProc3Raf3.getText());
-                        proc3Rafs[3] = Integer.parseInt(tfProc3Raf4.getText());
-                        procesos.add(new Proceso(2, proc3Rafs, sbProc3RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto3.getText())));
-                    case 1:
-                        int[] proc2Rafs = new int[4];
-                        proc2Rafs[0] = Integer.parseInt(tfProc2Raf1.getText());
-                        proc2Rafs[1] = Integer.parseInt(tfProc2Raf2.getText());
-                        proc2Rafs[2] = Integer.parseInt(tfProc2Raf3.getText());
-                        proc2Rafs[3] = Integer.parseInt(tfProc2Raf4.getText());
-                        procesos.add(new Proceso(1, proc2Rafs, sbProc2RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto2.getText())));
-                    case 0:
-                        int[] proc1Rafs = new int[4];
-                        proc1Rafs[0] = Integer.parseInt(tfProc1Raf1.getText());
-                        proc1Rafs[1] = Integer.parseInt(tfProc1Raf2.getText());
-                        proc1Rafs[2] = Integer.parseInt(tfProc1Raf3.getText());
-                        proc1Rafs[3] = Integer.parseInt(tfProc1Raf4.getText());
-                        procesos.add(new Proceso(0, proc1Rafs, sbProc1RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto1.getText())));
-                }
                 AlgoCPU algoCPU;
-                if (selectBox.getSelected().equals("Round Robin")) {
-                    algoCPU = new RoundRobin(procesos, Integer.parseInt(tfConmutacion.getText()),
-                            skin, Integer.parseInt(tfCuanto.getText()));;
+                ArrayList<Proceso> procesos = new ArrayList<>(4);
+                if (cbLeer.isChecked()) {
+                    Json json = new Json();
+                    json.setIgnoreUnknownFields(true);
+                    json.addClassTag("proceso", JsonInfoProceso.class);
+                    JsonInfoCpu infoCpu = json.fromJson(JsonInfoCpu.class, Gdx.files.local("CPU.json"));
+                    for (int i = infoCpu.Procesos.length-1; i >= 0; i--) {
+                        procesos.add(new Proceso(i, infoCpu.Procesos[i].Rafagas, infoCpu.Procesos[i].Rafagas.length, infoCpu.Procesos[i].ListoEn));
+                   }
+                    
+                    if(infoCpu.Algoritmo == 0){
+                        algoCPU = new RoundRobin(procesos, infoCpu.TiempoConmutacion,
+                                skin, infoCpu.Cuanto);
+                    } else {
+                        algoCPU = new TMCaC(procesos, infoCpu.TiempoConmutacion, skin,
+                                infoCpu.a, infoCpu.EstimacionInicial);
+                    }
                 } else {
-                    algoCPU = new TMCaC(procesos, Integer.parseInt(tfConmutacion.getText()), skin,
-                            Float.parseFloat(textA.getText()), Integer.parseInt(textEstimacion.getText()));
+                    switch (sbProcessNumSel.getSelectedIndex()) {
+                        case 5:
+                            int[] proc6Rafs = new int[4];
+                            proc6Rafs[0] = Integer.parseInt(tfProc6Raf1.getText());
+                            proc6Rafs[1] = Integer.parseInt(tfProc6Raf2.getText());
+                            proc6Rafs[2] = Integer.parseInt(tfProc6Raf3.getText());
+                            proc6Rafs[3] = Integer.parseInt(tfProc6Raf4.getText());
+                            procesos.add(new Proceso(5, proc6Rafs, sbProc6RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto6.getText())));
+                        case 4:
+                            int[] proc5Rafs = new int[4];
+                            proc5Rafs[0] = Integer.parseInt(tfProc5Raf1.getText());
+                            proc5Rafs[1] = Integer.parseInt(tfProc5Raf2.getText());
+                            proc5Rafs[2] = Integer.parseInt(tfProc5Raf3.getText());
+                            proc5Rafs[3] = Integer.parseInt(tfProc5Raf4.getText());
+                            procesos.add(new Proceso(4, proc5Rafs, sbProc5RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto5.getText())));
+                        case 3:
+                            int[] proc4Rafs = new int[4];
+                            proc4Rafs[0] = Integer.parseInt(tfProc4Raf1.getText());
+                            proc4Rafs[1] = Integer.parseInt(tfProc4Raf2.getText());
+                            proc4Rafs[2] = Integer.parseInt(tfProc4Raf3.getText());
+                            proc4Rafs[3] = Integer.parseInt(tfProc4Raf4.getText());
+                            procesos.add(new Proceso(3, proc4Rafs, sbProc4RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto4.getText())));
+                        case 2:
+                            int[] proc3Rafs = new int[4];
+                            proc3Rafs[0] = Integer.parseInt(tfProc3Raf1.getText());
+                            proc3Rafs[1] = Integer.parseInt(tfProc3Raf2.getText());
+                            proc3Rafs[2] = Integer.parseInt(tfProc3Raf3.getText());
+                            proc3Rafs[3] = Integer.parseInt(tfProc3Raf4.getText());
+                            procesos.add(new Proceso(2, proc3Rafs, sbProc3RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto3.getText())));
+                        case 1:
+                            int[] proc2Rafs = new int[4];
+                            proc2Rafs[0] = Integer.parseInt(tfProc2Raf1.getText());
+                            proc2Rafs[1] = Integer.parseInt(tfProc2Raf2.getText());
+                            proc2Rafs[2] = Integer.parseInt(tfProc2Raf3.getText());
+                            proc2Rafs[3] = Integer.parseInt(tfProc2Raf4.getText());
+                            procesos.add(new Proceso(1, proc2Rafs, sbProc2RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto2.getText())));
+                        case 0:
+                            int[] proc1Rafs = new int[4];
+                            proc1Rafs[0] = Integer.parseInt(tfProc1Raf1.getText());
+                            proc1Rafs[1] = Integer.parseInt(tfProc1Raf2.getText());
+                            proc1Rafs[2] = Integer.parseInt(tfProc1Raf3.getText());
+                            proc1Rafs[3] = Integer.parseInt(tfProc1Raf4.getText());
+                            procesos.add(new Proceso(0, proc1Rafs, sbProc1RafagaNum.getSelectedIndex() + 1, Integer.parseInt(tflisto1.getText())));
+                    }
+
+                    if (selectBox.getSelected().equals("Round Robin")) {
+                        algoCPU = new RoundRobin(procesos, Integer.parseInt(tfConmutacion.getText()),
+                                skin, Integer.parseInt(tfCuanto.getText()));;
+                    } else {
+                        algoCPU = new TMCaC(procesos, Integer.parseInt(tfConmutacion.getText()), skin,
+                                Float.parseFloat(textA.getText()), Integer.parseInt(textEstimacion.getText()));
+                    }
                 }
                 main.setScreen(new CPUScreen(main, skin, algoCPU));
                 dispose();

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -63,6 +64,14 @@ public class InfoAccesoMem {
         int j = 0;
         for (ActorPageInfo actor : actors) {
             actor.setNum(++j);
+        }
+    }
+    
+    public void deleteaLL() {
+        for (Iterator<ActorPageInfo> it = actors.iterator(); it.hasNext();) {
+            ActorPageInfo actor = it.next();
+            actor.remove();
+            actors.remove(actor);
         }
     }
     

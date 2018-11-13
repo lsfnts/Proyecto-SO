@@ -10,6 +10,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -22,15 +23,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.dis.DisScreen;
 import com.grupo2.proyecto.dis.algoritmos.AlgoDis;
 import com.grupo2.proyecto.dis.algoritmos.ElevUni;
 import com.grupo2.proyecto.dis.algoritmos.Ssf;
-import com.grupo2.proyecto.mem.algoritmos.Fifo;
-import com.grupo2.proyecto.mem.algoritmos.Nfu;
 import com.grupo2.proyecto.menus.util.InfoAccesoDis;
+import com.grupo2.proyecto.menus.util.json.JsonInfoDisco;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -102,14 +105,16 @@ public class DisMenu extends ScreenAdapter {
         sbDir.setItems("Izquierda", "Derecha");
         hgDireccion.addActor(sbDir);
 
-        HorizontalGroup hgButtons = new HorizontalGroup().space(60).padTop(60);
-        final TextButton buttonAccept = new TextButton("Aceptar", skin);
+        HorizontalGroup hgButtons = new HorizontalGroup().space(20).padTop(60);
+
         ImageButton ibBack = new ImageButton(skin.getDrawable("icon_back"));
         ibBack.getImage().setFillParent(true);
         ibBack.setFillParent(true);
         hgButtons.addActor(new Container(ibBack).size(60));
+        CheckBox cbLeer = new CheckBox(" Leer de archivo", skin);
+        hgButtons.addActor(cbLeer);
+        final TextButton buttonAccept = new TextButton("Aceptar", skin);
         buttonAccept.pad(10);
-        buttonAccept.invalidate();
         hgButtons.addActor(buttonAccept);
         vgPanel.addActor(hgButtons);
 
@@ -149,12 +154,30 @@ public class DisMenu extends ScreenAdapter {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 AlgoDis algoDis = null;
-                if (sbAlgo.getSelectedIndex() == 0) {
-                    algoDis = new Ssf(sbPosIni.getSelectedIndex(),Integer.valueOf(tfTDesp.getText()));
+                if (cbLeer.isChecked()) {
+                    Json json = new Json();
+                    json.setIgnoreUnknownFields(true);
+                    JsonInfoDisco infoDisco = json.fromJson(JsonInfoDisco.class, Gdx.files.local("Disco.json"));
+                    if (infoDisco.Algoritmo == 0) {
+                        algoDis = new Ssf(infoDisco.PosicionInicial, infoDisco.PromedioDesplazamiento);
+                    } else {
+                        int dir = 1;
+                        if (infoDisco.izquierda) {
+                            dir = 0;
+                        }
+                        algoDis = new ElevUni(infoDisco.PosicionInicial, infoDisco.PromedioDesplazamiento, dir);
+                    }
+                    algoDis.setAccesos(new ArrayList<>(Arrays.asList(infoDisco.solicitudes)), infoDisco.PosicionInicial);
+
                 } else {
-                    algoDis = new ElevUni(sbPosIni.getSelectedIndex(), Integer.valueOf(tfTDesp.getText()), sbDir.getSelectedIndex());
+                    if (sbAlgo.getSelectedIndex() == 0) {
+                        algoDis = new Ssf(sbPosIni.getSelectedIndex(), Integer.valueOf(tfTDesp.getText()));
+                    } else {
+                        algoDis = new ElevUni(sbPosIni.getSelectedIndex(), Integer.valueOf(tfTDesp.getText()), sbDir.getSelectedIndex());
+                    }
+                    algoDis.setAccesos(ia.getAccesos(), sbPosIni.getSelectedIndex());
                 }
-                algoDis.setAccesos(ia.getAccesos(), sbPosIni.getSelectedIndex());
+
                 main.setScreen(new DisScreen(main, skin, algoDis));
                 dispose();
             }

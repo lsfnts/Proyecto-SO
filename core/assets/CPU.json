@@ -1,0 +1,23 @@
+{
+  "TiempoConmutacion": 1,
+  "Algoritmo": 0,
+  "Cuanto": 4,
+  "a": 0.5,
+  "EstimacionInicial": 4,
+  "Procesos": [
+    {
+	  "class" : "proceso",
+      "ListoEn": 0,
+      "Rafagas": [
+        5
+      ]
+    },
+    {
+	  "class" : "proceso",
+      "ListoEn": 1,
+      "Rafagas": [
+        3
+      ]
+    }
+  ]
+}

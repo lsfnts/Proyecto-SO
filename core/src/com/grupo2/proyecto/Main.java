@@ -105,6 +105,13 @@ public class Main extends Game {
         checkBoxStyle.fontColor = Color.DARK_GRAY;
         skin.add("default", checkBoxStyle);
         
+        CheckBox.CheckBoxStyle checkBoxStyleW = new CheckBox.CheckBoxStyle();
+        checkBoxStyleW.checkboxOff = skin.getDrawable("radiobox_off");
+        checkBoxStyleW.checkboxOn = skin.getDrawable("radiobox_on");
+        checkBoxStyleW.font = skin.getFont("font");
+        checkBoxStyleW.fontColor = Color.LIGHT_GRAY;
+        skin.add("default", checkBoxStyleW);
+        
         Window.WindowStyle windowStyle = new Window.WindowStyle();
         windowStyle.titleFont = skin.getFont("font");
         windowStyle.background = skin.getDrawable("window_01");
