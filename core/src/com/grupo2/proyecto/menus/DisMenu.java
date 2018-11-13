@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.dis.DisScreen;
 import com.grupo2.proyecto.dis.algoritmos.AlgoDis;
+import com.grupo2.proyecto.dis.algoritmos.ElevUni;
 import com.grupo2.proyecto.dis.algoritmos.Ssf;
 import com.grupo2.proyecto.mem.algoritmos.Fifo;
 import com.grupo2.proyecto.mem.algoritmos.Nfu;
@@ -60,7 +61,7 @@ public class DisMenu extends ScreenAdapter {
         hgPosIni.addActor(lPosIni);
         final SelectBox sbPosIni = new SelectBox(skin);
         sbPosIni.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
-        sbPosIni.setMaxListCount(5);
+        sbPosIni.setMaxListCount(7);
         hgPosIni.addActor(sbPosIni);
         vgPanel.addActor(hgPosIni);
 
@@ -75,7 +76,7 @@ public class DisMenu extends ScreenAdapter {
         hgAddSolic.addActor(new Label("Cilindro #", skin, "dark"));
         final SelectBox sbCilNum = new SelectBox(skin);
         sbCilNum.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
-        sbCilNum.setMaxListCount(5);
+        sbCilNum.setMaxListCount(7);
         hgAddSolic.addActor(sbCilNum);
 
         TextButton agregar = new TextButton("Agregar", skin);
@@ -86,7 +87,7 @@ public class DisMenu extends ScreenAdapter {
         vgPanel.addActor(new Container(tAdd).padBottom(60));
 
         final VerticalGroup vgTipoAlgo = new VerticalGroup();
-        vgTipoAlgo.space(10);
+        vgTipoAlgo.space(10).padBottom(52);
 
         vgTipoAlgo.addActor(new Label("Algoritmo", skin));
         final SelectBox sbAlgo = new SelectBox(skin);
@@ -94,8 +95,7 @@ public class DisMenu extends ScreenAdapter {
         vgTipoAlgo.addActor(sbAlgo);
         vgPanel.addActor(vgTipoAlgo);
 
-        final HorizontalGroup hgDireccion = new HorizontalGroup();
-        hgDireccion.space(10);
+        final HorizontalGroup hgDireccion = new HorizontalGroup().space(10).padBottom(0);
 
         hgDireccion.addActor(new Label("Direccion", skin));
         final SelectBox sbDir = new SelectBox(skin);
@@ -122,8 +122,10 @@ public class DisMenu extends ScreenAdapter {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (sbAlgo.getSelected().equals("Elevador unidireccional")) {
                     vgTipoAlgo.addActor(hgDireccion);
+                    vgTipoAlgo.padBottom(0);
                 } else {
                     vgTipoAlgo.removeActor(hgDireccion);
+                    vgTipoAlgo.padBottom(52);
                 }
             }
         });
@@ -150,6 +152,7 @@ public class DisMenu extends ScreenAdapter {
                 if (sbAlgo.getSelectedIndex() == 0) {
                     algoDis = new Ssf(sbPosIni.getSelectedIndex(),Integer.valueOf(tfTDesp.getText()));
                 } else {
+                    algoDis = new ElevUni(sbPosIni.getSelectedIndex(), Integer.valueOf(tfTDesp.getText()), sbDir.getSelectedIndex());
                 }
                 algoDis.setAccesos(ia.getAccesos(), sbPosIni.getSelectedIndex());
                 main.setScreen(new DisScreen(main, skin, algoDis));

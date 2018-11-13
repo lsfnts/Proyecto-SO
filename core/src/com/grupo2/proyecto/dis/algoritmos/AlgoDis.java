@@ -17,7 +17,7 @@ public interface AlgoDis {
 
     public void addAcceso(int a);
 
-    public void setAccesos(ArrayList accesos, int inicial);
+    public void setAccesos(ArrayList<Integer> accesos, int inicial);
 
     public int getDesp();
 
