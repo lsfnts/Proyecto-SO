@@ -71,6 +71,7 @@ public class ActorProc extends Container<Actor> {
         if (proceso.rafagaActual < 0) {
             lRafagas.setText("terminado");
             lTiempo.setText("");
+            stack.add(new Container(new Image(skin.getDrawable("icon_check"))).size(90, 80).bottom().right().pad(8));
         } else if (proceso.terRaf) {
             lRafagas.setText("Rafaga:  " + (proceso.rafagaActual));
             lTiempo.setText("Rafaga actual:  " + 0 + " ms");
@@ -102,9 +103,5 @@ public class ActorProc extends Container<Actor> {
 
     public Proceso getProceso() {
         return proceso;
-    }
-
-    public void terminar() {
-        stack.add(new Container(new Image(skin.getDrawable("icon_check"))).size(90, 80).bottom().right().pad(8));
     }
 }

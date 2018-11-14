@@ -1,22 +1,65 @@
 {
-  "TiempoConmutacion": 1,
+  "TiempoConmutacion": 2,
   "Algoritmo": 0,
-  "Cuanto": 4,
+  "Cuanto": 5,
   "a": 0.5,
   "EstimacionInicial": 4,
   "Procesos": [
     {
-	  "class" : "proceso",
+      "class": "proceso",
       "ListoEn": 0,
       "Rafagas": [
-        5
+        5,
+        4,
+        6,
+        7
       ]
     },
     {
-	  "class" : "proceso",
+      "class": "proceso",
+      "ListoEn": 5,
+      "Rafagas": [
+        3,
+        3
+      ]
+    },
+    {
+      "class": "proceso",
+      "ListoEn": 0,
+      "Rafagas": [
+        3,
+        5,
+        6
+      ]
+    },
+    {
+      "class": "proceso",
       "ListoEn": 1,
       "Rafagas": [
+        3,
+        1,
+        1,
         3
+      ]
+    },
+    {
+      "class": "proceso",
+      "ListoEn": 1,
+      "Rafagas": [
+        3,
+        12,
+        11,
+        6
+      ]
+    },
+    {
+      "class": "proceso",
+      "ListoEn": 1,
+      "Rafagas": [
+        3,
+        5,
+        6,
+        7
       ]
     }
   ]

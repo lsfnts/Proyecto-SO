@@ -59,8 +59,8 @@ public class RoundRobin implements AlgoCPU {
             return;
         }
         cContexto += 1;
-        nextIndex += 1;
-        activo = cola.get(nextIndex % cola.size());
+        nextIndex = (nextIndex + 1) % cola.size();
+        activo = cola.get(nextIndex);
         activo.esperando = false;
     }
 
@@ -81,6 +81,7 @@ public class RoundRobin implements AlgoCPU {
             for (Proceso proceso : cola) {
                 proceso.addtRespuesta();
                 proceso.addtEspera();
+                proceso.addtRetorno();
             }
             conmutActual -= 1;
             t++;
@@ -93,9 +94,13 @@ public class RoundRobin implements AlgoCPU {
                 t++;
                 return false;
             }
-            aProcs.get(procesos.indexOf(activo)).activar();
+            for (ActorProc aProc : aProcs) {
+                if (aProc.getProceso().equals(activo)) {
+                    aProc.activar();
+                }
+            }
         }
-        if (cuantoActual == 0 || usar()) {
+        if (usar() || cuantoActual == 0) {
             verSiTermino(activo);
             cuantoActual = cuanto;
             conmutActual = conmut;
@@ -122,11 +127,8 @@ public class RoundRobin implements AlgoCPU {
     private void verSiTermino(Proceso proceso) {
         if (proceso.terminado) {
             porTerminar -= 1;
-            if (cola.indexOf(activo) <= (nextIndex % cola.size())) {
-                nextIndex -= 1;
-            }
-            aProcs.get(procesos.indexOf(activo)).terminar();
             cola.remove(proceso);
+            nextIndex -=1;
         }
     }
 
@@ -149,12 +151,9 @@ public class RoundRobin implements AlgoCPU {
             if (activo == null && !cola.isEmpty()) {
                 activo = cola.get(0);
                 activo.esperando = false;
-                aProcs.get(cola.indexOf(proceso)).activar();
+                aProcs.get(procesos.indexOf(proceso)).activar();
             }
         }
-        Gdx.app.log("proceso", procesos.get(procesos.indexOf(activo)).id+"");
-        Gdx.app.log("activo", procesos.indexOf(activo)+"");
-        Gdx.app.log("Cola", cola.size()+"");
     }
 
     @Override

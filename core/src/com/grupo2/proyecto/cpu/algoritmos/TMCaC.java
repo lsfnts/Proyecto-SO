@@ -123,9 +123,10 @@ public class TMCaC implements AlgoCPU {
                 cola.sort(comparator);
                 aProcs.add(new ActorProc(skin, proceso, procesos.indexOf(proceso) + 1));
             }
-            if (activo == null) {
+            if (activo == null && !cola.isEmpty()) {
                 activo = cola.get(0);
-                aProcs.get(cola.indexOf(proceso)).activar();
+                activo.esperando = false;
+                aProcs.get(procesos.indexOf(proceso)).activar();
             }
         }
     }
@@ -133,7 +134,6 @@ public class TMCaC implements AlgoCPU {
     private void verSiTermino(Proceso proceso) {
         if (proceso.terminado) {
             porTerminar -= 1;
-            aProcs.get(procesos.indexOf(activo)).terminar();
             cola.remove(proceso);
         }
     }

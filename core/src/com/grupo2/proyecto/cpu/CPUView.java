@@ -151,8 +151,8 @@ public class CPUView {
 
     public void render(float delta) {
         acumulador += delta;
-        if (acumulador >= 1f && !termino && aux != 0) {
-            acumulador -= 1f;
+        if (acumulador >= 0.5f && !termino && aux != 0) {
+            acumulador -= 0.5f;
             termino = algoCPU.simular();
 
             actualizar();
