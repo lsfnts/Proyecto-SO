@@ -8,6 +8,7 @@ package com.grupo2.proyecto.dis.algoritmos;
 import com.badlogic.gdx.Gdx;
 import com.grupo2.proyecto.dis.util.DisComparator;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -52,57 +53,67 @@ public class ElevUni implements AlgoDis {
             tiempo += despActual * tDes;
         } else if (izquierda && pos > oldPos) {
             //despActual += oldPos + 38 - pos;
-            despActual += 19-pos;
+            despActual += 19 - pos;
             tiempo += despActual * tDes;
         } else {
             despActual = Math.abs(pos - oldPos);
             tiempo += despActual * tDes;
         }
-        completados.add(pos+":"+despActual * tDes);
+        completados.add(pos + ":" + despActual * tDes);
         desp += despActual;
         return false;
     }
 
-    private int nextPos() {
-        if (izquierda && order != 0) {
-            order -= 1;
+    private int ordenar() {
+        int i = 0;
+        ordenados.add(100);
+        if (izquierda) {
+            for (int j = 0; j < accesos.size(); j++) {
+                Integer get = accesos.get(j);
+                if (get > pos) {
+                    ordenados.add(get);
+                } else if (get == pos) {
+                    ordenados.add(0, get);
+                    i++;
+                } else {
+                    ordenados.add(ordenados.indexOf(pos) + i++, get);
+                }
+            }
+        } else {
+            for (int j = 0; j < accesos.size(); j++) {
+                Integer get = accesos.get(j);
+                if (get < pos) {
+                    ordenados.add(get);
+                } else if (get == pos) {
+                    ordenados.add(0, get);
+                    i++;
+                } else {
+                    ordenados.add(ordenados.indexOf(pos) + i++, get);
+                }
+            }
         }
-        pos = accesos.get(order);
-        ordenados.add(accesos.remove(order));
-        if (!izquierda && pos == max) {
-            order = 0;
-        } else if (izquierda && order == 0) {
-            order = accesos.size() - 1;
-        }
-        if (order == accesos.size()) {
-            order -= 1;
-        }
+        ordenados.remove(Integer.valueOf(100));
         return pos;
     }
 
     @Override
-    public void addAcceso(int a) {
+    public void addAcceso(int a
+    ) {
         ordenados.add(a);
         setAccesos(ordenados, pos);
     }
 
     @Override
-    public void setAccesos(ArrayList<Integer> accesos, int inicial) {
-        accesos.add(inicial);
+    public void setAccesos(ArrayList<Integer> accesos, int inicial
+    ) {
         accesos.sort(comparator);
-        max = accesos.get(accesos.size() - 1);
-        order = accesos.indexOf(inicial);
-        accesos.remove(new Integer(inicial));
-        if (order == accesos.size()) {
-            order -= 1;
+        if (izquierda) {
+            Collections.reverse(accesos);
         }
         pos = inicial;
         this.accesos = accesos;
         ordenados = new ArrayList<>();
-        for (int i = accesos.size(); i > 0; i--) {
-            nextPos();
-        }
-        pos = inicial;
+        ordenar();
     }
 
     @Override
@@ -124,7 +135,7 @@ public class ElevUni implements AlgoDis {
     public ArrayList<Integer> getAccesosRestantes() {
         return ordenados;
     }
-    
+
     @Override
     public ArrayList<String> getAccesosPasados() {
         return completados;
