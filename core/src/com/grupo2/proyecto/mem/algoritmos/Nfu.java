@@ -5,7 +5,6 @@
  */
 package com.grupo2.proyecto.mem.algoritmos;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.grupo2.proyecto.mem.util.ActorPag;
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ public class Nfu implements AlgoMem {
     int contador;
     boolean olvidar;
     boolean reestrablecer;
-    
+
     boolean isR;
     ArrayList<String> anterior;
 
@@ -88,15 +87,28 @@ public class Nfu implements AlgoMem {
     @Override
     public boolean simular() {
         clear();
-        
+
         if (ronda == accesos.size()) {
             return true;
         }
         if (accesos.get(ronda) < 0) {
-            reestrablecer=true;
+            reestrablecer = true;
             sumarR();
             isR = true;
             accesos.remove(ronda);
+            anterior = new ArrayList<>();
+            int i;
+            for (i = 0; i < marcos.size(); i++) {
+                if (actorPags.get(accesos.get(i)).r) {
+                    anterior.add(String.valueOf(marcos.get(i)) + "\nR:1 C:" + actorPags.get(accesos.get(i)).c);
+                } else {
+                    anterior.add(String.valueOf(marcos.get(i)) + "\nR:0 C:" + actorPags.get(accesos.get(i)).c);
+                }
+
+            };
+            for (; i < marcosMax; i++) {
+                anterior.add("");
+            }
             return false;
         }
         isR = false;
@@ -107,12 +119,12 @@ public class Nfu implements AlgoMem {
         anterior = new ArrayList<>();
         int i;
         for (i = 0; i < marcos.size(); i++) {
-            if(actorPags.get(i).r){
-                anterior.add(String.valueOf(marcos.get(i))+"\nR:1 C:"+actorPags.get(accesos.get(i)).c);
-            } else{
-                anterior.add(String.valueOf(marcos.get(i))+"\nR:0 C:"+actorPags.get(accesos.get(i)).c);
+            if (actorPags.get(accesos.get(i)).r) {
+                anterior.add(String.valueOf(marcos.get(i)) + "\nR:1 C:" + actorPags.get(accesos.get(i)).c);
+            } else {
+                anterior.add(String.valueOf(marcos.get(i)) + "\nR:0 C:" + actorPags.get(accesos.get(i)).c);
             }
-            
+
         };
         for (; i < marcosMax; i++) {
             anterior.add("");
