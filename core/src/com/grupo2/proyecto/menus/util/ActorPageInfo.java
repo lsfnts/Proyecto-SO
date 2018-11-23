@@ -31,9 +31,9 @@ public class ActorPageInfo extends Container<Actor> {
         HorizontalGroup hg = new HorizontalGroup();
         hg.addActor(lNum);
         if (escritura) {
-            hg.addActor(new Label("  Pag. = " + n + "  - E. ", skin, "dark"));
+            hg.addActor(new Label("  Pag. = " + n + "  * E. ", skin, "dark"));
         } else {
-            hg.addActor(new Label("  Pag. = " + n + " - L. ", skin, "dark"));
+            hg.addActor(new Label("  Pag. = " + n + " * L. ", skin, "dark"));
         }
         hg.addActor(tbEliminar);
         vg.addActor(hg);

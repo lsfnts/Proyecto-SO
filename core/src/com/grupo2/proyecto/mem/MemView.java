@@ -54,7 +54,7 @@ public class MemView {
         this.main = main;
         this.skin = skin;
         this.algoMem = algoMem;
-        stage = new Stage(new FitViewport(1300, 900));
+        stage = new Stage(new FitViewport(1400, 900));
         
         HorizontalGroup hg = new HorizontalGroup();
         hg.setFillParent(true);
@@ -109,7 +109,8 @@ public class MemView {
         
         historialMem = new HistorialMem(skin);
         final ScrollPane spAccesos = new ScrollPane(historialMem.getActor(), skin);
-        vgPanel.addActor(new Container(spAccesos).size(420, 240).pad(10).center());
+        
+        vgPanel.addActor(new Container(spAccesos).size(600, 240).pad(10).center());
         
         ibBack.addListener(new ChangeListener() {
             @Override

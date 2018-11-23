@@ -11,8 +11,8 @@ package com.grupo2.proyecto.cpu.algoritmos;
  */
 public class Proceso {
 
-    int id;
-    int[] tRafagas;
+    public int id;
+    public int[] tRafagas;
     public int rafagaActual;
     public float en;
     public int t;
@@ -48,7 +48,6 @@ public class Proceso {
             rafagaActual +=1;
             if (rafagaActual== tRafagas.length) {
                 terminado = true;
-                rafagaActual = -1;
                 return true;
             } else {
                 t = tRafagas[rafagaActual];
@@ -56,6 +55,15 @@ public class Proceso {
             return true;
         }
         return false;
+    }
+    
+    public int[] getRafagas(){
+        int[] is = new int[tRafagas.length-rafagaActual];
+        int i = 0;
+        for (int j = rafagaActual; j < tRafagas.length; j++) {
+            is[i++] = tRafagas[j];
+        }
+        return is;
     }
 
     public void addtRespuesta() {

@@ -71,8 +71,10 @@ public class InfoAccesoMem {
         for (Iterator<ActorPageInfo> it = actors.iterator(); it.hasNext();) {
             ActorPageInfo actor = it.next();
             actor.remove();
-            actors.remove(actor);
+            it.remove();
         }
+        nums = new ArrayList<>();
+        i = 0;
     }
     
     public ArrayList<Integer> getAccesos() {

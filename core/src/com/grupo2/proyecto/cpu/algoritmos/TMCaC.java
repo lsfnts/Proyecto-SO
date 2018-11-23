@@ -31,6 +31,8 @@ public class TMCaC implements AlgoCPU {
     ProcComparator comparator;
     int cContexto;
     
+    ArrayList<Proceso> anterior;
+    
     boolean conmutando;
 
     public TMCaC(ArrayList<Proceso> procesos, int conmut, Skin skin, float a, int e0) {
@@ -44,6 +46,7 @@ public class TMCaC implements AlgoCPU {
         this.aProcs = new ArrayList<ActorProc>(6);
         porTerminar = procesos.size();
         comparator = new ProcComparator();
+        anterior = new ArrayList<>();
     }
 
     @Override
@@ -54,11 +57,13 @@ public class TMCaC implements AlgoCPU {
             }
             return true;
         }
+        anterior = new ArrayList<>();
         for (ActorProc aProc : aProcs) {
             aProc.desactivar();
             aProc.actualizar();
         }
         if (conmutActual != 0) {
+            nuevoProcListo();
             conmutando = true;
             for (Proceso proceso : cola) {
                 proceso.addtRespuesta();
@@ -75,6 +80,10 @@ public class TMCaC implements AlgoCPU {
         }
         if (usar()) {
             //aProcs.get(cola.indexOf(activo)).desactivar();
+            
+            for (Proceso proc : cola) {
+                anterior.add(proc);
+            }
             nuevaEstimacion(activo);
             verSiTermino(activo);
             siguienteProceso();
@@ -192,6 +201,11 @@ public class TMCaC implements AlgoCPU {
     @Override
     public boolean isConmutando() {
         return conmutando;
+    }
+
+    @Override
+    public ArrayList<Proceso> getRondaAnterior() {
+        return anterior;
     }
 
 }

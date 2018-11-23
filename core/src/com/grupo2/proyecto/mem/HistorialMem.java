@@ -30,23 +30,11 @@ public class HistorialMem {
         i=1;
     }
 
-    public void addAcces(int n) {
-        actors.add(new Container(new TextButton(String.valueOf(n), skin,"caja")));
-        vg.addActor(actors.get(actors.size() - 1));
-    }
-
-    public void deleteAcces(int pos) {
-        if (pos < 0) {
-            return;
-        }
-        actors.remove(pos);
-    }
-   
     public void addRow(ArrayList<String> accesos){
        HorizontalGroup hg = new HorizontalGroup();
        hg.addActor(new Label(String.valueOf(i++), skin,"small"));
        for (String acceso : accesos) {
-           actors.add(new Container(new TextButton(acceso, skin,"caja").padBottom(20)).height(60).padBottom(15));
+           actors.add(new Container(new TextButton(acceso, skin,"caja").padBottom(20)).height(40).padBottom(15));
            hg.addActor(actors.get(actors.size() - 1));
        }
        vg.addActor(hg);
@@ -59,7 +47,7 @@ public class HistorialMem {
            hg.addActor(new Label(String.valueOf(i++), skin,"small"));
        }
        for (String acceso : accesos) {
-           actors.add(new Container(new TextButton(acceso, skin,"caja").padBottom(20)).height(60).padBottom(15));
+           actors.add(new Container(new TextButton(acceso, skin,"caja").padBottom(20)).height(70).padBottom(15));
            hg.addActor(actors.get(actors.size() - 1));
        }
        vg.addActor(hg);

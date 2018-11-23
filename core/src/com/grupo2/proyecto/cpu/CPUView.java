@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
@@ -26,6 +27,7 @@ import com.grupo2.proyecto.Main;
 import com.grupo2.proyecto.menus.CPUMenu;
 import com.grupo2.proyecto.cpu.algoritmos.AlgoCPU;
 import com.grupo2.proyecto.cpu.algoritmos.RoundRobin;
+import com.grupo2.proyecto.mem.HistorialMem;
 
 /**
  *
@@ -48,6 +50,9 @@ public class CPUView {
     Label lTactual;
     Label lConmutando;
 
+    HistorialCpu historialCpu;
+    ScrollPane spProcesos;
+
     int aux;
 
     public CPUView(final Main main, final Skin skin, AlgoCPU algoCPU) {
@@ -66,10 +71,14 @@ public class CPUView {
         tProcesos.add(new Container<>().size(360, 1));
         hg.addActor(tProcesos);
 
+        historialCpu = new HistorialCpu(skin);
+        spProcesos = new ScrollPane(historialCpu.getActor(), skin);
+        
+
         VerticalGroup vgPanel = new VerticalGroup().space(20);
         if (algoCPU instanceof RoundRobin) {
             vgPanel.addActor(new Label("Round Robin", skin));
-            vgPanel.addActor(new Label("Cuanto: 3 ms", skin));
+            vgPanel.addActor(new Label("Cuanto: "+((RoundRobin) algoCPU).cuanto+" ms", skin));
         } else {
 
             vgPanel.addActor(new Label("Tiempo mas corto\na continuacion", skin));
@@ -78,7 +87,7 @@ public class CPUView {
             } else {
                 vgPanel.addActor(new Label("a: 0." + algoCPU.getConfig()[0], skin));
             }
-            vgPanel.addActor(new Label("estimacion inicial: " + algoCPU.getConfig()[1]+" ms", skin));
+            vgPanel.addActor(new Label("estimacion inicial: " + algoCPU.getConfig()[1] + " ms", skin));
         }
 
         vgPanel.addActor(new Container(new Image(skin.getDrawable("slider_back_hor"))).width(400).pad(10));
@@ -173,9 +182,12 @@ public class CPUView {
         lTEspera.setText("Tiempo de espera\npromedio:  " + algoCPU.getPromedioEspera() + " ms");
         lTRetorno.setText("Tiempo de retorno\npromedio:  " + algoCPU.getPromedioRetorno() + " ms");
         lConmutando.setVisible(algoCPU.isConmutando());
+        if (!algoCPU.getRondaAnterior().isEmpty()) {
+            historialCpu.addRow(algoCPU.getRondaAnterior(), algoCPU.getT());
+        }
     }
 
-    public void resize(int width, int height) {
+public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         //hg.expand();
     }
@@ -193,6 +205,8 @@ public class CPUView {
         } else {
             tProcesos.pad(20);
         }
+        tProcesos.row();
+        tProcesos.add(new Container(spProcesos).size(720, 240).pad(10).center()).colspan(2);
     }
 
     public void dispose() {

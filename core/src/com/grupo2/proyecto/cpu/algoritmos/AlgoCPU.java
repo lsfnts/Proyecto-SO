@@ -30,4 +30,6 @@ public interface AlgoCPU {
     public int getT();
     
     public boolean isConmutando();
+    
+    public ArrayList<Proceso> getRondaAnterior();
 }

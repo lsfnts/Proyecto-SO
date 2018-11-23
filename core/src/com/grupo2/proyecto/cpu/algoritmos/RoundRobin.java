@@ -31,6 +31,8 @@ public class RoundRobin implements AlgoCPU {
     Skin skin;
     int cContexto;
     boolean conmutando;
+    
+    ArrayList<Proceso> anterior;
 
     public RoundRobin(ArrayList<Proceso> procesos, int conmut, Skin skin, int cuanto) {
         this.t = 0;
@@ -72,11 +74,13 @@ public class RoundRobin implements AlgoCPU {
             }
             return true;
         }
+        anterior = new ArrayList<>();
         for (ActorProc aProc : aProcs) {
             aProc.desactivar();
             aProc.actualizar();
         }
         if (conmutActual != 0) {
+            nuevoProcListo();
             conmutando = true;
             for (Proceso proceso : cola) {
                 proceso.addtRespuesta();
@@ -101,6 +105,10 @@ public class RoundRobin implements AlgoCPU {
             }
         }
         if (usar() || cuantoActual == 0) {
+            
+            for (Proceso proc : cola) {
+                anterior.add(proc);
+            }
             verSiTermino(activo);
             cuantoActual = cuanto;
             conmutActual = conmut;
@@ -196,6 +204,11 @@ public class RoundRobin implements AlgoCPU {
     @Override
     public boolean isConmutando() {
         return conmutando;
+    }
+
+    @Override
+    public ArrayList<Proceso> getRondaAnterior() {
+        return anterior;
     }
 
 }
