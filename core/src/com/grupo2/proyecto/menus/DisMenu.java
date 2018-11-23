@@ -119,8 +119,8 @@ public class DisMenu extends ScreenAdapter {
         vgPanel.addActor(hgButtons);
 
         final InfoAccesoDis ia = new InfoAccesoDis(skin);
-        final ScrollPane spProcess = new ScrollPane(ia.getActor(), skin);
-        hg.addActor(new Container(spProcess).size(400, 600).pad(10).center());
+        final ScrollPane spAccesos = new ScrollPane(ia.getActor(), skin);
+        hg.addActor(new Container(spAccesos).size(400, 600).pad(10).center());
 
         sbAlgo.addListener(new ChangeListener() {
             @Override

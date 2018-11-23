@@ -167,10 +167,10 @@ public class MemMenu extends ScreenAdapter {
                     Json json = new Json();
                     json.setIgnoreUnknownFields(true);
                     JsonInfoMemoria infoMemoria = json.fromJson(JsonInfoMemoria.class, Gdx.files.local("Memoria.json"));
-                    if(infoMemoria.algoritmo == 0) {
+                    if(infoMemoria.Algoritmo == 0) {
                         algoMem = new Fifo(skin);
                         algoMem.setAccesos(new ArrayList<>(Arrays.asList(infoMemoria.solicitudes)));
-                    } else {
+                    } else {Gdx.app.log("algo", Arrays.asList(infoMemoria.solicitudes)+"");
                         algoMem = new Nfu(skin, infoMemoria.RondasParaSumarR, infoMemoria.sumarIzquierda);
                         ia.deleteaLL();
                         for (int i = 0; i < infoMemoria.solicitudes.length; i++) {

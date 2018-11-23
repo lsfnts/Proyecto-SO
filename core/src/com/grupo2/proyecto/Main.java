@@ -46,6 +46,12 @@ public class Main extends Game {
         textButtonStyleS.fontColor = Color.DARK_GRAY;
         skin.add("caja", textButtonStyleS);
         
+        TextButton.TextButtonStyle textButtonStyleSmall = new TextButton.TextButtonStyle();
+        textButtonStyleSmall.up = skin.newDrawable("textbox_02");
+        textButtonStyleSmall.font = skin.getFont("smallFont");
+        textButtonStyleSmall.fontColor = Color.DARK_GRAY;
+        skin.add("cajita", textButtonStyleSmall);
+        
         SelectBox.SelectBoxStyle selectBoxStyle = new SelectBox.SelectBoxStyle();
         selectBoxStyle.background = skin.getDrawable("selectbox_01");
         selectBoxStyle.font = skin.getFont("font");
@@ -96,7 +102,6 @@ public class Main extends Game {
         
         Label.LabelStyle labelStyleMD = new Label.LabelStyle(skin.getFont("mediumFont"), Color.DARK_GRAY);
         skin.add("medium", labelStyleMD);
-        setScreen(new MainMenu(this, skin));
         
         CheckBox.CheckBoxStyle checkBoxStyle = new CheckBox.CheckBoxStyle();
         checkBoxStyle.checkboxOff = skin.getDrawable("radiobox_off");
@@ -122,6 +127,7 @@ public class Main extends Game {
         windowStyleCi.background = skin.getDrawable("window_01");
         skin.add("cilindro", windowStyleCi);
         
+        setScreen(new MainMenu(this, skin));
     }
 
     @Override

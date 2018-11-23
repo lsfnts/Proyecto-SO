@@ -25,6 +25,7 @@ public interface AlgoDis {
 
     public int getTiempo();
 
-    public ArrayList<Integer> getAccesos();
+    public ArrayList<Integer> getAccesosRestantes();
 
+    public ArrayList<String> getAccesosPasados();
 }

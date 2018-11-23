@@ -27,8 +27,8 @@ public class InfoAccesoMem {
 
     public InfoAccesoMem(Skin skin) {
         this.skin = skin;
-        nums = new ArrayList<Integer>();
-        actors = new ArrayList<ActorPageInfo>();
+        nums = new ArrayList<>();
+        actors = new ArrayList<>();
         vg = new VerticalGroup().padRight(20);
     }
 

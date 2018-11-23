@@ -22,6 +22,8 @@ public class Fifo implements AlgoMem {
     LinkedList<Integer> marcos;
     int marcosMax;
     ArrayList<ActorPag> actorPags;
+    
+    ArrayList<String> anterior;
 
     int ronda;
     int Taciertos;
@@ -58,11 +60,19 @@ public class Fifo implements AlgoMem {
     @Override
     public boolean simular() {
         clear();
+        anterior = new ArrayList<>();
         if (ronda == accesos.length) {
             return true;
         }
         if (!solicitarPag(accesos[ronda])) {
             reemplazar(accesos[ronda]);
+        }
+        int i;
+        for (i = 0; i < marcos.size(); i++) {
+            anterior.add(String.valueOf(marcos.get(i)));
+        };
+        for (; i < marcosMax; i++) {
+            anterior.add("");
         }
         ronda += 1;
         return false;
@@ -116,6 +126,16 @@ public class Fifo implements AlgoMem {
     @Override
     public String getRondaText() {
         return "ronda: " + ronda;
+    }
+
+    @Override
+    public ArrayList<String> getRondaAnterior() {
+        return anterior;
+    }
+
+    @Override
+    public boolean isR() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

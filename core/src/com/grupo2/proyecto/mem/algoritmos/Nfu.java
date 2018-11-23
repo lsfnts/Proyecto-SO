@@ -31,6 +31,9 @@ public class Nfu implements AlgoMem {
     int contador;
     boolean olvidar;
     boolean reestrablecer;
+    
+    boolean isR;
+    ArrayList<String> anterior;
 
     public Nfu(Skin skin, int interval, boolean olvidar) {
         this.skin = skin;
@@ -85,18 +88,34 @@ public class Nfu implements AlgoMem {
     @Override
     public boolean simular() {
         clear();
+        
         if (ronda == accesos.size()) {
             return true;
         }
         if (accesos.get(ronda) < 0) {
             reestrablecer=true;
             sumarR();
+            isR = true;
             accesos.remove(ronda);
             return false;
         }
+        isR = false;
         reestrablecer = false;
         if (!solicitarPag(accesos.get(ronda))) {
             reemplazar(accesos.get(ronda));
+        }
+        anterior = new ArrayList<>();
+        int i;
+        for (i = 0; i < marcos.size(); i++) {
+            if(actorPags.get(i).r){
+                anterior.add(String.valueOf(marcos.get(i))+"\nR:1 C:"+actorPags.get(accesos.get(i)).c);
+            } else{
+                anterior.add(String.valueOf(marcos.get(i))+"\nR:0 C:"+actorPags.get(accesos.get(i)).c);
+            }
+            
+        };
+        for (; i < marcosMax; i++) {
+            anterior.add("");
         }
         ronda += 1;
         return false;
@@ -154,6 +173,16 @@ public class Nfu implements AlgoMem {
         } else {
             return "ronda: " + ronda;
         }
+    }
+
+    @Override
+    public ArrayList<String> getRondaAnterior() {
+        return anterior;
+    }
+
+    @Override
+    public boolean isR() {
+        return isR;
     }
 
 }

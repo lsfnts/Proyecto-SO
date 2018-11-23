@@ -32,7 +32,6 @@ import com.grupo2.proyecto.dis.algoritmos.AlgoDis;
 import com.grupo2.proyecto.dis.algoritmos.Ssf;
 import com.grupo2.proyecto.dis.util.ActorDisSolList;
 import com.grupo2.proyecto.menus.DisMenu;
-import com.grupo2.proyecto.menus.util.InfoAccesoDis;
 
 /**
  *
@@ -49,6 +48,7 @@ public class DisView {
     Label lCilDes;
     Label lTiempo;
     ActorDisSolList disSolList;
+    ActorDisSolList histList;
     
     boolean termino;
     int aux;
@@ -98,9 +98,16 @@ public class DisView {
         
         vgCils.addActor(new Label("Solicitudes restantes", skin));
         disSolList = new ActorDisSolList(skin);
-        disSolList.setAcces(algoDis.getAccesos());
-        ScrollPane spProcess = new ScrollPane(disSolList.getActor(), skin);
-        vgCils.addActor(new Container(spProcess).size(650, 80).pad(10).top().padTop(10));
+        disSolList.setAcces(algoDis.getAccesosRestantes());
+        ScrollPane spSolic = new ScrollPane(disSolList.getActor(), skin);
+        vgCils.addActor(new Container(spSolic).size(650, 80).pad(10).top().padTop(10));
+        
+        
+        vgCils.addActor(new Label("Solicitudes anteriores", skin));
+        histList = new ActorDisSolList(skin);
+        ScrollPane spHist = new ScrollPane(histList.getActor(), skin);
+        vgCils.addActor(new Container(spHist).size(650, 80).pad(10).top().padTop(10));
+        
         hg.addActor(vgCils);
         
         VerticalGroup vgPanel = new VerticalGroup().space(20);
@@ -139,7 +146,7 @@ public class DisView {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 algoDis.addAcceso(sbCilNum.getSelectedIndex());
-                disSolList.setAcces(algoDis.getAccesos());
+                disSolList.setAcces(algoDis.getAccesosRestantes());
                 termino = false;
             }
         });
@@ -206,7 +213,8 @@ public class DisView {
         sBrazo.setValue(algoDis.getPos());
         lCilDes.setText("cilindros desplazados:  "+algoDis.getDesp());
         lTiempo.setText("tiempo:  "+algoDis.getTiempo()+" ms");
-        disSolList.setAcces(algoDis.getAccesos());
+        disSolList.setAcces(algoDis.getAccesosRestantes());
+        histList.setStrings(algoDis.getAccesosPasados());
     }
     
 }

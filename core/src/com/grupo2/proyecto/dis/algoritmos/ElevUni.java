@@ -17,6 +17,7 @@ public class ElevUni implements AlgoDis {
 
     ArrayList<Integer> accesos;
     ArrayList<Integer> ordenados;
+    ArrayList<String> completados;
     int tDes;
     int tiempo;
     int order;
@@ -34,6 +35,7 @@ public class ElevUni implements AlgoDis {
         this.oldPos = ini;
         this.tDes = tDes;
         this.izquierda = (sel == 0);
+        completados = new ArrayList<>();
     }
 
     @Override
@@ -56,6 +58,7 @@ public class ElevUni implements AlgoDis {
             despActual = Math.abs(pos - oldPos);
             tiempo += despActual * tDes;
         }
+        completados.add(pos+":"+despActual * tDes);
         desp += despActual;
         return false;
     }
@@ -118,8 +121,13 @@ public class ElevUni implements AlgoDis {
     }
 
     @Override
-    public ArrayList<Integer> getAccesos() {
+    public ArrayList<Integer> getAccesosRestantes() {
         return ordenados;
+    }
+    
+    @Override
+    public ArrayList<String> getAccesosPasados() {
+        return completados;
     }
 
 }

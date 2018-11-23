@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -47,6 +48,7 @@ public class MemView {
     Label lRonda;
     boolean termino;
     private int aux;
+   HistorialMem historialMem; 
 
     public MemView(Main main, Skin skin, AlgoMem algoMem) {
         this.main = main;
@@ -104,6 +106,10 @@ public class MemView {
         
         vgPanel.addActor(hgButtons);
         hg.addActor(vgPanel);
+        
+        historialMem = new HistorialMem(skin);
+        final ScrollPane spAccesos = new ScrollPane(historialMem.getActor(), skin);
+        vgPanel.addActor(new Container(spAccesos).size(420, 240).pad(10).center());
         
         ibBack.addListener(new ChangeListener() {
             @Override
@@ -163,6 +169,12 @@ public class MemView {
         for (int i = 0; i < marcos.length; i++) {
             marcos[i].add(algoMem.getPagInMarco(i));
         }
+        if(algoMem instanceof Fifo){
+            historialMem.addRow(algoMem.getRondaAnterior());
+        } else {
+            historialMem.addRow(algoMem.getRondaAnterior(),algoMem.isR());
+        }
+        
     }
     
     public void resize(int width, int height) {

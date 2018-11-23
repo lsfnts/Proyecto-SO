@@ -47,7 +47,20 @@ public class ActorDisSolList {
        }
        actors = new ArrayList<>();
        for (Integer acceso : accesos) {
-           actors.add(new Container(new TextButton(String.valueOf(String.valueOf(acceso)), skin,"caja").padBottom(20)).height(40).padBottom(15));
+           actors.add(new Container(new TextButton(String.valueOf(acceso), skin,"caja").padBottom(20)).height(40).padBottom(15));
+           hg.addActor(actors.get(actors.size() - 1));
+       }
+   }
+   
+   public void setStrings(ArrayList<String> accesos){
+       for (Container actor : actors) {
+           actor.remove();
+       }
+       actors = new ArrayList<>();
+       for (String acceso : accesos) {
+           actors.add(new Container(new TextButton(acceso.split(":")[0], skin,"caja").padBottom(20)).height(40).padBottom(15));
+           actors.add(new Container(new TextButton(acceso.split(":")[1]+"ms", skin,"cajita").padBottom(20)).height(40).padBottom(15).padRight(20));
+           hg.addActor(actors.get(actors.size() - 2));
            hg.addActor(actors.get(actors.size() - 1));
        }
    }

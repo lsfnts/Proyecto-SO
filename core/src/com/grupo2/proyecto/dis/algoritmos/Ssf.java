@@ -18,6 +18,7 @@ public class Ssf implements AlgoDis {
 
     ArrayList<Integer> accesos;
     ArrayList<Integer> ordenados;
+    ArrayList<String> completados;
     int tDes;
     int tiempo;
     int order;
@@ -32,6 +33,7 @@ public class Ssf implements AlgoDis {
     public Ssf(int pos, int tDes) {
         this.inicial = pos;
         this.tDes = tDes;
+        completados = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +44,7 @@ public class Ssf implements AlgoDis {
         oldPos = pos;
         pos = ordenados.remove(0);
         desp += Math.abs(pos - oldPos);
+        completados.add(pos+":"+Math.abs(pos - oldPos) * tDes);
         tiempo += Math.abs(pos - oldPos) * tDes;
         return false;
     }
@@ -102,8 +105,13 @@ public class Ssf implements AlgoDis {
     }
 
     @Override
-    public ArrayList<Integer> getAccesos() {
+    public ArrayList<Integer> getAccesosRestantes() {
         return ordenados;
+    }
+
+    @Override
+    public ArrayList<String> getAccesosPasados() {
+        return completados;
     }
 
 }

@@ -11,7 +11,7 @@ package com.grupo2.proyecto.menus.util.json;
  */
 public class JsonInfoMemoria {
     public int MarcosDisponibles;
-    public int algoritmo;
+    public int Algoritmo;
     public int RondasParaSumarR;
     public boolean sumarIzquierda;
     public Integer[] solicitudes;

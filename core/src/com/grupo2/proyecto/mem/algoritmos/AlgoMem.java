@@ -29,4 +29,8 @@ public interface AlgoMem {
     public int getTFallos();
     
     public String getRondaText();
+    
+    public ArrayList<String> getRondaAnterior();
+    
+    public boolean isR();
 }
