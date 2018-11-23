@@ -35,7 +35,7 @@ public class ActorPag extends Container<Actor> {
     Label lC;
 
     //info de pagina
-    int num;
+    public int num;
     int aciertos;
     int fallos;
     public boolean r;

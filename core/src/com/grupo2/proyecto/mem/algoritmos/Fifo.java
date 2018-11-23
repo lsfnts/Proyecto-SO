@@ -22,7 +22,7 @@ public class Fifo implements AlgoMem {
     LinkedList<Integer> marcos;
     int marcosMax;
     ArrayList<ActorPag> actorPags;
-    
+
     ArrayList<String> anterior;
 
     int ronda;
@@ -37,6 +37,11 @@ public class Fifo implements AlgoMem {
     private boolean solicitarPag(int i) {
         if (marcos.contains(i)) {
             Taciertos += 1;
+            for (ActorPag actorPag : actorPags) {
+                if (actorPag.equals(i)) {
+                    actorPag.fallo();
+                }
+            }
             actorPags.get(accesos[i]).acierto();
             return true;
         } else {
@@ -82,8 +87,8 @@ public class Fifo implements AlgoMem {
     public void setAccesos(ArrayList<Integer> al) {
         accesos = al.stream().mapToInt(i -> i).toArray();
         for (int i = 0; i < accesos.length; i++) {
-            if (!actorPags.contains(i)) {
-                actorPags.add(new ActorPag(skin, i));
+            if (!actorPags.contains(al.get(i))) {
+                actorPags.add(new ActorPag(skin, al.get(i)));
             }
         }
     }
@@ -105,7 +110,14 @@ public class Fifo implements AlgoMem {
         if (marcos.size() <= pos) {
             return new ActorPag();
         }
-        return actorPags.get(marcos.get(pos));
+        int i = marcos.get(pos);
+        for (ActorPag actorPag : actorPags) {
+            
+            if (actorPag.equals(i)) {
+                return actorPag;
+            }
+        }
+        return new ActorPag();
     }
 
     @Override

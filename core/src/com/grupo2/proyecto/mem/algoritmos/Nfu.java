@@ -44,7 +44,11 @@ public class Nfu implements AlgoMem {
     private boolean solicitarPag(int i) {
         if (marcos.contains(i)) {
             Taciertos += 1;
-            actorPags.get(accesos.get(i)).acierto();
+            for (ActorPag actorPag : actorPags) {
+                if (actorPag.equals(i)) {
+                    actorPag.acierto();
+                }
+            }
             return true;
         } else {
             Tfallos += 1;
@@ -143,8 +147,8 @@ public class Nfu implements AlgoMem {
     public void setAccesos(ArrayList<Integer> al) {
         accesos = al;
         for (int i = 0; i < accesos.size(); i++) {
-            if (!actorPags.contains(i)) {
-                actorPags.add(new ActorPag(skin, i, olvidar));
+            if (!actorPags.contains(al.get(i))) {
+                actorPags.add(new ActorPag(skin, al.get(i), olvidar));
             }
         }
     }
@@ -160,7 +164,14 @@ public class Nfu implements AlgoMem {
         if (marcos.size() <= pos) {
             return new ActorPag();
         }
-        return actorPags.get(marcos.get(pos));
+        int i = marcos.get(pos);
+        for (ActorPag actorPag : actorPags) {
+            
+            if (actorPag.equals(i)) {
+                return actorPag;
+            }
+        }
+        return new ActorPag();
     }
 
     @Override
